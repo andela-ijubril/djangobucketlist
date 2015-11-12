@@ -12,6 +12,7 @@ class BucketlistItemSerializer(serializers.ModelSerializer):
 
 
 class BucketlistSerializer(serializers.ModelSerializer):
+    created_by = serializers.ReadOnlyField(source='created_by.username')
 
     class Meta:
         model = Bucketlist

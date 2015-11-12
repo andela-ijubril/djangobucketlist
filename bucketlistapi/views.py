@@ -7,7 +7,7 @@ from bucketlistapi.serializers import BucketlistSerializer, BucketlistItemSerial
 from rest_framework import generics
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import status
+from rest_framework import status, permissions
 # Create your views here.
 
 
@@ -19,8 +19,14 @@ from rest_framework import status
 
 class BucketlistView(APIView):
 
-    model = Bucketlist
+    # permission_classes = (permissions.IsAuthenticated)
+    # queryset = Bucketlist.objects.all()
     serializer_class = BucketlistSerializer
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+    model = Bucketlist
+
+    # def perform_create(self, serializer):
+    #     serializer.save(created_by=self.request.user)
 
     def get(self, request, format=None):
         bucketlists = Bucketlist.objects.all()
@@ -32,7 +38,7 @@ class BucketlistView(APIView):
         serializer = BucketlistSerializer(data=request.data)
 
         if serializer.is_valid():
-            serializer.save()
+            serializer.save(created_by=self.request.user)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -77,4 +83,4 @@ class BucketlistItemDetailView(generics.ListAPIView):
     pass
 
 
-class UserView()
+# class UserView()

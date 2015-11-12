@@ -16,12 +16,14 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 from bucketlistapi import views
+from rest_framework.authtoken import views as rest_views
 
 urlpatterns = [
+    url(r'^auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^bucketlists/$', views.BucketlistView.as_view(), name='bucket_list'),
     url(r'^bucketlists/(?P<pk>[0-9]+)/$', views.BucketListDetailView.as_view(), name='bucket_list_detail'),
     url(r'^bucketlists/(?P<pk>[0-9]+)/items/$', views.BucketListDetailView.as_view(), name='bucket_list_detail'),
     # url(r'^bucketlists/(?P<pk>[0-9]+)/items/(?P<pk>[0-9]+)/$', views.BucketListDetailView.as_view(), name='bucket_list_detail'),
-
+    url(r'^api_token/$', rest_views.obtain_auth_token),
 ]
