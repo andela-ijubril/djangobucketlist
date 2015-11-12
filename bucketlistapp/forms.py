@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from models import Bucketlist, BucketlistItems
+from models import Bucketlist, BucketlistItem
 
 
 class LoginForm(forms.Form):
@@ -64,8 +64,18 @@ class RegisterForm(forms.Form):
 
 
 class BucketlistForm(forms.Form):
-    name = forms.CharField(label='Add a bucketlist', max_length=100)
+
+    class Meta:
+        model = Bucketlist
+        fields = ['name']
+
+    # name = forms.CharField(label='Add a bucketlist', max_length=100)
 
 
 class ItemForm(forms.Form):
-    name = forms.CharField(label='Add a bucketlist item', max_length=150)
+
+    class Meta:
+        model = BucketlistItem
+        fields = ['name']
+
+    # name = forms.CharField(label='Add a bucketlist item', max_length=150)

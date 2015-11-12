@@ -7,7 +7,7 @@ from django.utils import timezone
 
 class BaseModel(models.Model):
     created_date = models.DateTimeField(default=timezone.now)
-    modified_date = models.DateTimeField(auto_now=True, default=timezone.now())
+    modified_date = models.DateTimeField(auto_now=True)
 
     class Meta:
         abstract = True
@@ -16,12 +16,10 @@ class BaseModel(models.Model):
 class Bucketlist(BaseModel):
 
     name = models.CharField(max_length=100, blank=True)
-    public = models.BooleanField(default=False)
-    created_by = models.CharField(max_length=100, blank=True)
-    user = models.ForeignKey(User, related_name="buckets")
+    created_by = models.ForeignKey(User, related_name="bucketlist")
 
 
-class BucketlistItems(models.Model):
+class BucketlistItem(BaseModel):
 
     name = models.CharField(max_length=500, blank=True)
     done = models.BooleanField(default=False)
