@@ -1,5 +1,6 @@
 from django.http.response import Http404
 from django.shortcuts import render
+from django.contrib.auth.models import User
 
 from bucketlistapp.models import Bucketlist, BucketlistItem
 from bucketlistapi.serializers import BucketlistSerializer, BucketlistItemSerializer, UserSerializer
@@ -19,17 +20,18 @@ from rest_framework import status, permissions
 
 class BucketlistView(APIView):
 
-    # permission_classes = (permissions.IsAuthenticated)
+    permission_classes = (permissions.IsAuthenticated,)
     # queryset = Bucketlist.objects.all()
     serializer_class = BucketlistSerializer
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+    # permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
     model = Bucketlist
 
-    # def perform_create(self, serializer):
-    #     serializer.save(created_by=self.request.user)
+    def perform_create(self, serializer):
+        serializer.save(created_by=self.request.user)
 
     def get(self, request, format=None):
-        bucketlists = Bucketlist.objects.all()
+        bucketlists = Bucketlist.objects.filter(created_by=self.request.user).all()
+        # bucketlists = Bucketlist.objects.all()
         serializer = BucketlistSerializer(bucketlists, many=True)
         return Response(serializer.data)
 
@@ -83,4 +85,11 @@ class BucketlistItemDetailView(generics.ListAPIView):
     pass
 
 
-# class UserView()
+class UserList(generics.ListAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+
+class UserDetail(generics.RetrieveAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer

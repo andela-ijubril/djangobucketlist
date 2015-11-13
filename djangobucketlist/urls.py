@@ -16,6 +16,7 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 from bucketlistapi import views
+from bucketlistapp import views as app_view
 from rest_framework.authtoken import views as rest_views
 
 urlpatterns = [
@@ -26,4 +27,8 @@ urlpatterns = [
     url(r'^bucketlists/(?P<pk>[0-9]+)/items/$', views.BucketListDetailView.as_view(), name='bucket_list_detail'),
     # url(r'^bucketlists/(?P<pk>[0-9]+)/items/(?P<pk>[0-9]+)/$', views.BucketListDetailView.as_view(), name='bucket_list_detail'),
     url(r'^api_token/$', rest_views.obtain_auth_token),
+    url(r'^users/$', views.UserList.as_view()),
+    url(r'^users/(?P<pk>[0-9]+)/$', views.UserDetail.as_view()),
+
+    url(r'^buckettemp/$', app_view.BucketlistAppView.as_view(), name='bucket_list'),
 ]

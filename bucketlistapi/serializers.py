@@ -20,6 +20,7 @@ class BucketlistSerializer(serializers.ModelSerializer):
 
 
 class UserSerializer(serializers.ModelSerializer):
+    bucketlist = serializers.PrimaryKeyRelatedField(many=True, queryset=Bucketlist.objects.all())
 
     class Meta:
         model = User
