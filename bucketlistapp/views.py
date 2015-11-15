@@ -3,12 +3,7 @@ from django.shortcuts import render
 from django.contrib.auth.models import User
 
 from bucketlistapp.models import Bucketlist, BucketlistItem
-from bucketlistapi.serializers import BucketlistSerializer, BucketlistItemSerializer, UserSerializer
-
-from rest_framework import generics
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework import status, permissions
+from bucketlistapp.forms import LoginForm, RegisterForm
 
 
 from django.views.generic import View, TemplateView
@@ -16,88 +11,94 @@ from django.views.generic import View, TemplateView
 # Create your views here.
 
 
-# class BucketlistView(generics.ListAPIView):
-#
-#     model = Bucketlist
-#     serializer_class = BucketlistSerializer
+class IndexView(TemplateView):
+    initial = {'key': 'value'}
+    template_name = 'account/index.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated():
+            messages.add_message(
+                request, messages.SUCCESS, 'Welcome back!')
+            return redirect(
+                '/home',
+                context_instance=RequestContext(request)
+            )
+        return super(IndexView, self).dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super(IndexView, self).get_context_data(**kwargs)
+        context['loginform'] = LoginForm()
+        context['registerform'] = RegisterForm()
+        return context
 
 
-class BucketlistAppView(TemplateView):
-    template_name = 'bucketlistapp/base.html'
+class LoginView(IndexView):
+    form_class = LoginForm
+
+    def post(self, request, *args, **kwargs):
+
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            username = request.POST['username']
+            password = request.POST['password']
+            user = authenticate(username=username, password=password)
+            if not request.POST.get('remember_me'):
+                request.session.set_expiry(0)
+            if user is not None:
+                if user.is_active:
+                    login(request, user)
+                    messages.add_message(
+                        request, messages.SUCCESS, 'Logged in Successfully!')
+                    return redirect(
+                        '/bucketlist',
+                        context_instance=RequestContext(request)
+                    )
+            else:
+                messages.add_message(
+                    request, messages.ERROR, 'Incorrect username or password!')
+                return redirect(
+                    '/',
+                    context_instance=RequestContext(request)
+                )
+        else:
+            context = super(LoginView, self).get_context_data(**kwargs)
+            context['loginform'] = form
+            return render(request, self.template_name, context)
 
 
-class BucketlistView(APIView):
+class RegisterView(IndexView):
+    form_class = RegisterForm
 
-    permission_classes = (permissions.IsAuthenticated,)
-    # queryset = Bucketlist.objects.all()
-    serializer_class = BucketlistSerializer
-    # permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
-    model = Bucketlist
+    def post(self, request, **kwargs):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            new_user = form.save()
+            new_user = authenticate(username=request.POST['username'],
+                                    password=request.POST['password'])
+            login(request, new_user)
+            messages.add_message(
+                request, messages.SUCCESS, 'Registered Successfully!')
 
-    def perform_create(self, serializer):
-        serializer.save(created_by=self.request.user)
-
-    def get(self, request, format=None):
-        bucketlists = Bucketlist.objects.filter(created_by=self.request.user).all()
-        # bucketlists = Bucketlist.objects.all()
-        serializer = BucketlistSerializer(bucketlists, many=True)
-        return Response(serializer.data)
-
-    def post(self, request, format=None):
-
-        serializer = BucketlistSerializer(data=request.data)
-
-        if serializer.is_valid():
-            serializer.save(created_by=self.request.user)
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            return redirect(
+                '/bucketlist/' + self.request.user.username,
+                context_instance=RequestContext(request)
+            )
+        else:
+            context = super(RegisterView, self).get_context_data(**kwargs)
+            context['registerform'] = form
+            return render(request, self.template_name, context)
 
 
-class BucketListDetailView(APIView):
+class LoginRequiredMixin(object):
 
-    def get_bucket_object(self, pk):
-        try:
-            return Bucketlist.objects.get(pk=pk)
-        except Bucketlist.DoesNotExist:
-            raise Http404
-
-    def get(self, request, pk, format=None):
-        bucketlist = self.get_bucket_object(pk)
-        serializer = BucketlistSerializer(bucketlist)
-
-        return Response(serializer.data)
-
-    def put(self, request, pk, format=None):
-        bucketlist = self.get_bucket_object(pk)
-
-        serializer = BucketlistSerializer(bucketlist, request.data)
-
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    def delete(self, request, pk, format=None):
-        bucketlist = self.get_bucket_object(pk)
-
-        bucketlist.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+    @method_decorator(login_required(login_url='/'))
+    def dispatch(self, request, *args, **kwargs):
+        return super(LoginRequiredMixin, self).dispatch(
+            request, *args, **kwargs)
 
 
 
-class BucketlistItemView(generics.ListAPIView):
-    pass
+# class BucketlistAppView(TemplateView):
+#     template_name = 'bucketlistapp/base.html'
 
 
-class BucketlistItemDetailView(generics.ListAPIView):
-    pass
-
-
-class UserList(generics.ListAPIView):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
-
-
-class UserDetail(generics.RetrieveAPIView):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
