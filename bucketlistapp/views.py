@@ -1,5 +1,5 @@
 from django.http.response import Http404
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 
 from bucketlistapp.models import Bucketlist, BucketlistItem
@@ -7,23 +7,18 @@ from bucketlistapp.forms import LoginForm, RegisterForm
 
 
 from django.views.generic import View, TemplateView
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+from django.contrib.auth import authenticate, login
+from django.template import RequestContext
 
 # Create your views here.
 
 
 class IndexView(TemplateView):
     initial = {'key': 'value'}
-    template_name = 'account/index.html'
+    template_name = 'bucketlistapp/index.html'
 
-    def dispatch(self, request, *args, **kwargs):
-        if request.user.is_authenticated():
-            messages.add_message(
-                request, messages.SUCCESS, 'Welcome back!')
-            return redirect(
-                '/home',
-                context_instance=RequestContext(request)
-            )
-        return super(IndexView, self).dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super(IndexView, self).get_context_data(**kwargs)
@@ -47,15 +42,13 @@ class LoginView(IndexView):
             if user is not None:
                 if user.is_active:
                     login(request, user)
-                    messages.add_message(
-                        request, messages.SUCCESS, 'Logged in Successfully!')
+
                     return redirect(
                         '/bucketlist',
                         context_instance=RequestContext(request)
                     )
             else:
-                messages.add_message(
-                    request, messages.ERROR, 'Incorrect username or password!')
+
                 return redirect(
                     '/',
                     context_instance=RequestContext(request)
@@ -71,14 +64,13 @@ class RegisterView(IndexView):
 
     def post(self, request, **kwargs):
         form = self.form_class(request.POST)
+
         if form.is_valid():
             new_user = form.save()
             new_user = authenticate(username=request.POST['username'],
                                     password=request.POST['password'])
             login(request, new_user)
-            messages.add_message(
-                request, messages.SUCCESS, 'Registered Successfully!')
-
+            
             return redirect(
                 '/bucketlist/' + self.request.user.username,
                 context_instance=RequestContext(request)
@@ -98,7 +90,7 @@ class LoginRequiredMixin(object):
 
 
 
-# class BucketlistAppView(TemplateView):
-#     template_name = 'bucketlistapp/base.html'
+class BucketlistAppView(TemplateView):
+    template_name = 'bucketlistapp/index.html'
 
 

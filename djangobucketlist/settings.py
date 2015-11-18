@@ -41,6 +41,7 @@ INSTALLED_APPS = (
     'rest_framework.authtoken',
     'bucketlistapp',
     'bucketlistapi',
+    'bootstrapform',
 )
 
 MIDDLEWARE_CLASSES = (

@@ -20,6 +20,9 @@ from bucketlistapp import views as app_view
 from rest_framework.authtoken import views as rest_views
 
 urlpatterns = [
+    url(r'^index/$', app_view.IndexView.as_view(), name='index'),
+    url(r'^register$', app_view.RegisterView.as_view(), name='register'),
+    url(r'^login$', app_view.LoginView.as_view(), name='login'),
     url(r'^auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^bucketlists/$', views.BucketlistView.as_view(), name='bucket_list'),
