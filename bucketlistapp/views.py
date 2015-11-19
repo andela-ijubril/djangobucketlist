@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 
 from bucketlistapp.models import Bucketlist, BucketlistItem
-from bucketlistapp.forms import LoginForm, RegisterForm
+from bucketlistapp.forms import LoginForm, RegisterForm, BucketlistForm, ItemForm
 
 
 from django.views.generic import View, TemplateView
@@ -18,7 +18,6 @@ from django.template import RequestContext
 class IndexView(TemplateView):
     initial = {'key': 'value'}
     template_name = 'bucketlistapp/index.html'
-
 
     def get_context_data(self, **kwargs):
         context = super(IndexView, self).get_context_data(**kwargs)
@@ -44,7 +43,7 @@ class LoginView(IndexView):
                     login(request, user)
 
                     return redirect(
-                        '/bucketlist',
+                        '/bucketlists/',
                         context_instance=RequestContext(request)
                     )
             else:
@@ -70,9 +69,9 @@ class RegisterView(IndexView):
             new_user = authenticate(username=request.POST['username'],
                                     password=request.POST['password'])
             login(request, new_user)
-            
+
             return redirect(
-                '/bucketlist/' + self.request.user.username,
+                '/bucketlists/',
                 context_instance=RequestContext(request)
             )
         else:
@@ -89,8 +88,16 @@ class LoginRequiredMixin(object):
             request, *args, **kwargs)
 
 
+class BucketlistAppView(LoginRequiredMixin, TemplateView):
+    form_class = BucketlistForm
+    template_name = 'bucketlistapp/bucketlist.html'
 
-class BucketlistAppView(TemplateView):
-    template_name = 'bucketlistapp/index.html'
+    def post(self):
+        pass
+
+    def get_context_data(self, **kwargs):
+        context = super(BucketlistAppView, self).get_context_data(**kwargs)
+        context['bucketlistform'] = BucketlistForm()
+        return context
 
 

@@ -77,8 +77,31 @@ class BucketListDetailView(APIView):
 
 
 
-class BucketlistItemView(generics.ListAPIView):
-    pass
+class BucketlistItemView(APIView):
+
+    permission_classes = (permissions.IsAuthenticated,)
+    # queryset = Bucketlist.objects.all()
+    serializer_class = BucketlistItemSerializer
+    # permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+    model = BucketlistItem
+
+    def perform_create(self, serializer):
+        serializer.save(created_by=self.request.user)
+
+    def get(self, request, format=None):
+        items = BucketlistItem.objects.filter(created_by=self.request.user).all()
+        # bucketlists = Bucketlist.objects.all()
+        serializer = BucketlistSerializer(items, many=True)
+        return Response(serializer.data)
+
+    def post(self, request, format=None):
+
+        serializer = BucketlistItemSerializer(data=request.data)
+
+        if serializer.is_valid():
+            serializer.save(created_by=self.request.user)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class BucketlistItemDetailView(generics.ListAPIView):

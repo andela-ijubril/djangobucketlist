@@ -69,13 +69,9 @@ class BucketlistForm(forms.Form):
         model = Bucketlist
         fields = ['name']
 
-    # name = forms.CharField(label='Add a bucketlist', max_length=100)
-
 
 class ItemForm(forms.Form):
 
     class Meta:
         model = BucketlistItem
         fields = ['name']
-
-    # name = forms.CharField(label='Add a bucketlist item', max_length=150)
