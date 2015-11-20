@@ -18,6 +18,8 @@ after_success:
 #- coveralls
 deploy:
   provider: heroku
+  buildpack:
+    - python
   api_key:
     secure: GgKGabw00v3qKAmukl91u5ig50Dj4KkdoEv9gFVKIj/fUTZQnHRm+bu1b6c41fQqXEDdF11nneLIuLtuARu4ejiA1BL1m7REQIlCipxGZcYvwP/TfoqkkaGehXhmowIi19sxUhKZtfB8Zu7deAncM1fN6k9vVJ/BOGZJ/M6Chg3T3jIpDxutWSNO+qzS1NCWlEr3/t7FGnpkVxITgQHtdXBXbDxq9kCxHQbqBDWERmPHOpBewMrhoaGk1XBJvbPAzaRqpqisThx5uAtoCK1dShED2Ncy7g3noeOv/2SHPx7Ki4IOjaR3oPjEJviHh/TZS/bESIECWgeEcdwaMfNcyh4loaocxfcIGumB7siAZIhchuuNUEn7dkdw6HaG0756WuUrOYr19jkMAPHQRGJ0KhwXBxLcTujlBOBUnNG0w27qy9jA5xdGUUk3+ugvaZ0mMkvPDxUumJnVNMMm7KUxE7LEQFIQ2wF0d/2ekyOH+nPfe4I7bExhBceBS6pclqT4wFt+cypYsCuk0NYKNVTlhFZ1VuSknDz0FSL3pr8GOifTPwPCdW4wUplNnjh7ZHneM8WtSsowifEnwOX8UA2PEFiAY29SXrZMQOipW8g9jtxob2li3oWnqzaDjYG7JsyOgIg+g1LkDLA9Ys393qk8QYV/ZMEMtgMJ+vVAQJ3cir4=
   app:
@@ -31,3 +33,4 @@ deploy:
     - "python manage.py syncdb --noinput"
 after_deploy:
   - "heroku ps:scale web=1 --app awesomebucket"
+
