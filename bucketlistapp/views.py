@@ -90,7 +90,7 @@ class LoginRequiredMixin(object):
 
 class BucketlistAppView(LoginRequiredMixin, TemplateView):
     form_class = BucketlistForm
-    template_name = 'bucketlistapp/bucketlist.html'
+    template_name = 'bucketlistapp/bucketlists.html'
 
     def post(self):
         pass
