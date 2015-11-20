@@ -10,10 +10,10 @@ install:
 - npm install bower
 script:
 #- python bucketlist/manage.py bower install --settings=settings.testing
-- python manage.py collectstatic --noinput --settings=settings.test
-- python manage.py makemigrations --settings=settings.test
-- python manage.py migrate --settings=settings.test
-- python manage.py test --noinput --settings=settings.test
+- python manage.py collectstatic --noinput --settings=djangobucketlist.settings.test
+- python manage.py makemigrations --settings=djangobucketlist.settings.test
+- python manage.py migrate --settings=djangobucketlist.settings.test
+- python manage.py test --noinput --settings=djangobucketlist.settings.test
 after_success:
 #- coveralls
 deploy:
@@ -23,7 +23,7 @@ deploy:
   app:
     develop: awesomebucket
   run:
-    - "export DJANGO_SETTINGS_MODULE=settings.production"
+    - "export DJANGO_SETTINGS_MODULE=djangobucketlist.settings.production"
     - "python manage.py collectstatic --noinput"
     - "python manage.py makemigrations"
     - "python manage.py migrate auth"
