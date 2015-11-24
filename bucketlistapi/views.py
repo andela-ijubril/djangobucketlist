@@ -1,14 +1,13 @@
 from django.http.response import Http404
 from django.shortcuts import render
 from django.contrib.auth.models import User
-
 from bucketlistapp.models import Bucketlist, BucketlistItem
 from bucketlistapi.serializers import BucketlistSerializer, BucketlistItemSerializer, UserSerializer
-
 from rest_framework import generics
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status, permissions
+
 # Create your views here.
 
 
@@ -76,7 +75,6 @@ class BucketListDetailView(APIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-
 class BucketlistItemView(APIView):
 
     permission_classes = (permissions.IsAuthenticated,)
@@ -84,6 +82,12 @@ class BucketlistItemView(APIView):
     serializer_class = BucketlistItemSerializer
     # permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
     model = BucketlistItem
+
+    def get_bucket_object(self, pk):
+        try:
+            return Bucketlist.objects.get(pk=pk)
+        except Bucketlist.DoesNotExist:
+            raise Http404
 
     def perform_create(self, serializer):
         serializer.save(created_by=self.request.user)
@@ -94,18 +98,36 @@ class BucketlistItemView(APIView):
         serializer = BucketlistSerializer(items, many=True)
         return Response(serializer.data)
 
-    def post(self, request, format=None):
+    def post(self, request, pk, format=None):
+
+        bucket = self.get_bucket_object(pk)
 
         serializer = BucketlistItemSerializer(data=request.data)
 
         if serializer.is_valid():
-            serializer.save(created_by=self.request.user)
+            serializer.save(bucketlist=bucket.id)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class BucketlistItemDetailView(generics.ListAPIView):
-    pass
+
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def get_bucket_item(self, pk):
+        try:
+            return BucketlistItem.objects.filter(bucketlist=pk).get(pk=pk)
+        except BucketlistItem.DoesNotExist:
+            return Http404
+
+    def get(self):
+        pass
+
+    def put(self):
+        pass
+
+    def delete(self):
+        pass
 
 
 class UserList(generics.ListAPIView):

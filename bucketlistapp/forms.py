@@ -63,11 +63,12 @@ class RegisterForm(forms.Form):
         return new_user
 
 
-class BucketlistForm(forms.Form):
+class BucketlistForm(forms.ModelForm):
 
     class Meta:
         model = Bucketlist
         fields = ['name']
+        labels = {'name': 'Bucketlist name'}
 
 
 class ItemForm(forms.Form):

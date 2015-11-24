@@ -92,12 +92,35 @@ class BucketlistAppView(LoginRequiredMixin, TemplateView):
     form_class = BucketlistForm
     template_name = 'bucketlistapp/bucketlists.html'
 
-    def post(self):
-        pass
-
     def get_context_data(self, **kwargs):
         context = super(BucketlistAppView, self).get_context_data(**kwargs)
-        context['bucketlistform'] = BucketlistForm()
+        context['bucketlistform'] = self.form_class
         return context
 
+    def post(self, request, **kwargs):
+        name = request.POST.get('name')
 
+        bucketlist = Bucketlist(name=name, created_by=request.user)
+        bucketlist.save()
+        return redirect('/api/bucketlists/', context_instance=RequestContext(request))
+
+
+        # if form.is_valid():
+        #
+        #     # import pdb
+        #     # pdb.set_trace()
+        #     bucketlist = form.save()
+        #     bucketlist.created_by = request.user
+        #     bucketlist.save()
+        #     # import pdb
+        #     # pdb.set_trace()
+        #     return redirect('/api/bucketlists/', context_instance=RequestContext(request))
+
+        # else:
+        #     context = super(BucketlistAppView, self).get_context_data(**kwargs)
+        #     context['bucketlistform'] = form
+        #     return render(request, self.template_name, context)
+
+
+class BucketlistItemAppView(LoginRequiredMixin, TemplateView):
+    template_name = 'bucketlistapp/bucket.html'

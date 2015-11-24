@@ -29,6 +29,8 @@ urlpatterns = [
     url(r'^logout$', logout, {'next_page': '/'}),
 
     url(r'^bucketlists/$', app_view.BucketlistAppView.as_view(), name='bucket_list'),
+    url(r'^bucketlists/items/$', app_view.BucketlistItemAppView.as_view(), name='bucket_list'),
+
 
 
 
@@ -37,7 +39,7 @@ urlpatterns = [
     url(r'^api/users/(?P<pk>[0-9]+)/$', views.UserDetail.as_view()),
     url(r'^api/bucketlists/$', views.BucketlistView.as_view(), name='bucket_list'),
     url(r'^api/bucketlists/(?P<pk>[0-9]+)/$', views.BucketListDetailView.as_view(), name='bucket_list_detail'),
-    url(r'^api/bucketlists/(?P<pk>[0-9]+)/items/$', views.BucketListDetailView.as_view(), name='bucket_list_detail'),
+    url(r'^api/bucketlists/(?P<pk>[0-9]+)/items/$', views.BucketlistItemView.as_view(), name='bucket_list_detail'),
     url(r'^api/bucketlists/(?P<pk>[0-9]+)/items/(?P<id>[0-9]+)$', views.BucketListDetailView.as_view(), name='bucket_list_detail'),
     url(r'^api_token/$', rest_views.obtain_auth_token),
 
