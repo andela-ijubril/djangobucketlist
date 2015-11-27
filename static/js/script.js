@@ -158,6 +158,7 @@ $(function () {
 
 
  $(document).ready(function () {
+     console.log("i got here")
     $('.forgot-pass').click(function(event) {
       $(".pr-wrap").toggleClass("show-pass-reset");
     });
@@ -171,7 +172,7 @@ $(function () {
          var url = $(this).data("action");
          console.log(url);
          $("#edit-bucket").find("form").attr("action",url);
-     })
-});
+     });
 
+});
 

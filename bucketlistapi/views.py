@@ -110,7 +110,9 @@ class BucketlistItemView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class BucketlistItemDetailView(generics.ListAPIView):
+# class BucketlistItemDetailView(generics.ListAPIView):
+
+class BucketlistItemDetailView(APIView):
 
     permission_classes = (permissions.IsAuthenticated,)
 
@@ -120,14 +122,27 @@ class BucketlistItemDetailView(generics.ListAPIView):
         except BucketlistItem.DoesNotExist:
             return Http404
 
-    def get(self):
-        pass
+    def get(self, request, pk, format=None):
+        bucketlistitem = self.get_bucket_item(pk)
+        serializer = BucketlistItemSerializer(bucketlistitem)
 
-    def put(self):
-        pass
+        return Response(serializer.data)
 
-    def delete(self):
-        pass
+    def put(self, request, pk, format=None):
+        bucketlistitem = self.get_bucket_item(pk)
+
+        serializer = BucketlistItemSerializer(bucketlistitem, request.data)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, pk, format=None):
+        bucketlistitem = self.get_bucket_item(pk)
+
+        bucketlistitem.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 class UserList(generics.ListAPIView):
