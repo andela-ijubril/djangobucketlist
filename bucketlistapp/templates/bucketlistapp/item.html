@@ -1,0 +1,69 @@
+{% load staticfiles %}
+{% load bootstrap %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="{% static 'css/bootstrap.min.css' %}" type="text/css" rel="stylesheet"/>
+    <link href="{% static 'css/style.css' %}" type="text/css" rel="stylesheet"/>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+
+
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6 col-sm-offset-3">
+            <div class="todolist not-done">
+             <h1>{{ bucket.name }}</h1>
+
+
+                <form method="post" action="/bucketlists/{{ bucket.id }}/items/">
+                    {% csrf_token %}
+                    {{ itemform|bootstrap }}
+{#                <input type="text" class="form-control add-todo" placeholder="Add a bucketlist">#}
+                <input type="submit" value="Add">
+                </form>
+                    <hr>
+
+                    <ul id="sortable" class="list-unstyled">
+                        {% for item in items %}
+                            <li class="ui-state-default">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" value="" />{{ item.name }}</label>
+                            <a href="/bucketlists/{{ bucket.id }}/"><span class="glyphicon glyphicon-trash text-muted c-info" data-toggle="tooltip" title="Delete"></span></a>
+                            <a data-action="/bucketlists/{{ bucket.id }}/" href="#edit-bucket" data-toggle="modal" data-placement="top" class="edit-link"><span class="glyphicon glyphicon-pencil text-muted c-info" data-toggle="tooltip" title="Edit"></span></a>
+                        </div>
+                    </li>
+
+                        {% endfor %}
+
+
+
+                </ul>
+                                    <hr>
+<div class="row" style="margin:20px;">
+
+                                   </div>
+             <div>
+                <a href="/logout" class="btn btn-primary">logout</a>
+            </div>
+ </div>
+
+        </div>
+
+    </div>
+</div>
+
+
+<script src="{% static 'js/jquery.min.js' %}"></script>
+<script src="{% static 'js/jquery-ui.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+
+
+
+</body>
+</html>

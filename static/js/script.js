@@ -142,3 +142,36 @@ $(function () {
         }
     })
 });
+
+
+
+
+
+
+
+
+
+
+
+
+// home page landing
+
+
+ $(document).ready(function () {
+    $('.forgot-pass').click(function(event) {
+      $(".pr-wrap").toggleClass("show-pass-reset");
+    });
+
+    $('.pass-reset-submit').click(function(event) {
+      $(".pr-wrap").removeClass("show-pass-reset");
+    });
+
+     $(".edit-link").click(function(e){
+         e.preventDefault();
+         var url = $(this).data("action");
+         console.log(url);
+         $("#edit-bucket").find("form").attr("action",url);
+     })
+});
+
+

@@ -71,7 +71,7 @@ class BucketlistForm(forms.ModelForm):
         labels = {'name': 'Bucketlist name'}
 
 
-class ItemForm(forms.Form):
+class ItemForm(forms.ModelForm):
 
     class Meta:
         model = BucketlistItem

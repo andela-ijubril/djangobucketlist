@@ -5,7 +5,6 @@ from django.contrib.auth.models import User
 from bucketlistapp.models import Bucketlist, BucketlistItem
 from bucketlistapp.forms import LoginForm, RegisterForm, BucketlistForm, ItemForm
 
-
 from django.views.generic import View, TemplateView
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
@@ -90,10 +89,11 @@ class LoginRequiredMixin(object):
 
 class BucketlistAppView(LoginRequiredMixin, TemplateView):
     form_class = BucketlistForm
-    template_name = 'bucketlistapp/bucketlists.html'
+    template_name = 'bucketlistapp/bucket.html'
 
     def get_context_data(self, **kwargs):
         context = super(BucketlistAppView, self).get_context_data(**kwargs)
+        context['buckets'] = Bucketlist.objects.filter(created_by=self.request.user)
         context['bucketlistform'] = self.form_class
         return context
 
@@ -102,8 +102,30 @@ class BucketlistAppView(LoginRequiredMixin, TemplateView):
 
         bucketlist = Bucketlist(name=name, created_by=request.user)
         bucketlist.save()
-        return redirect('/api/bucketlists/', context_instance=RequestContext(request))
 
+        return redirect('/bucketlists/', context_instance=RequestContext(request))
+
+
+class BucketlistItemAppView(LoginRequiredMixin, TemplateView):
+    form_class = ItemForm
+    template_name = 'bucketlistapp/item.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(BucketlistItemAppView, self).get_context_data(**kwargs)
+        bucket = kwargs['bucketlist']
+
+        context['bucket'] = Bucketlist.objects.get(id=bucket)
+        context['items'] = BucketlistItem.objects.filter(bucketlist=context['bucket'])
+        context['itemform'] = self.form_class
+        return context
+
+    def post(self, request, **kwargs):
+        name = request.POST.get('name')
+
+        item = BucketlistItem(name=name, bucketlist=Bucketlist.objects.get(id=kwargs['bucketlist']))
+        item.save()
+
+        return redirect('/bucketlists/' + kwargs['bucketlist'] + '/items/', context_instance=RequestContext(request))
 
         # if form.is_valid():
         #
@@ -122,5 +144,38 @@ class BucketlistAppView(LoginRequiredMixin, TemplateView):
         #     return render(request, self.template_name, context)
 
 
-class BucketlistItemAppView(LoginRequiredMixin, TemplateView):
-    template_name = 'bucketlistapp/bucket.html'
+class DeleteBucketlistView(LoginRequiredMixin, TemplateView):
+
+
+    def get(self, request, **kwargs):
+        pass
+
+
+class UpdateBucketlistView(LoginRequiredMixin, TemplateView):
+
+    def get(self, request, **kwargs):
+        bucketlist = Bucketlist.objects.get(id=kwargs['bucket_id'])
+        bucketlist.delete()
+        return redirect('/bucketlists/', context_instance=RequestContext(request))
+
+    def post(self, request, **kwargs):
+        bucket_list = Bucketlist.objects.get(id=kwargs['bucket_id'])
+        name = request.POST.get('name')
+        bucket_list.name = name
+        bucket_list.save()
+
+        # item = BucketlistItem(name=name, bucketlist=Bucketlist.objects.get(id=kwargs['bucketlist']))
+        # item.save()
+
+        # return redirect('/bucketlists/' + kwargs['bucketlist'] + '/items/', context_instance=RequestContext(request))
+        return redirect('/bucketlists/', context_instance=RequestContext(request))
+
+
+
+class UpdateBucketlistItemView(LoginRequiredMixin, TemplateView):
+
+    def get(self, request, **kwargs):
+        item = BucketlistItem.objects.get(id=kwargs[''])
+
+    def post(self, request, **kwargs):
+        pass
