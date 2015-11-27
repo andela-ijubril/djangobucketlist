@@ -1,8 +1,10 @@
+coverage==4.0.3
 dj-database-url==0.3.0
 Django==1.8.6
 django-bootstrap-form==3.2
 django-envie==0.0.9
 django-postgrespool==0.3.0
+django-rest-swagger==0.3.4
 djangorestframework==3.3.1
 gunicorn==19.3.0
 psycopg2==2.6.1
