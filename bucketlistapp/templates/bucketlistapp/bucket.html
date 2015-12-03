@@ -14,6 +14,7 @@
 
 
     <div class="row">
+
         <div class="col-xs-12 col-sm-offset-3 col-sm-6">
             <div class="panel panel-default">
                 <div class="panel-heading c-list">
@@ -48,7 +49,7 @@
                         <div class="col-xs-12 col-sm-9">
                             <a href="/bucketlists/{{ bucket.id }}/items/"><span class="name">{{ bucket.name }}</span></a><br/>
                             <a href="/bucketlists/{{ bucket.id }}/"><span class="glyphicon glyphicon-trash text-muted c-info" data-toggle="tooltip" title="Delete"></span></a>
-                            <a data-action="/bucketlists/{{ bucket.id }}/" href="#edit-bucket" data-toggle="modal" data-placement="top" class="edit-link"><span class="glyphicon glyphicon-pencil text-muted c-info" data-toggle="tooltip" title="Edit"></span></a>
+                            <a data-action="/bucketlists/{{ bucket.id }}/"  class="edit-bucket" href="#edit-bucket" data-toggle="modal" data-placement="top" class="edit-link"><span class="glyphicon glyphicon-pencil text-muted c-info" data-toggle="tooltip" title="Edit"></span></a>
                         </div>
                         <div class="clearfix"></div>
                     </li>

@@ -156,6 +156,10 @@ $(function () {
 
 // home page landing
 
+function ConfirmDelete(){
+var agree=confirm("Are you sure you want to delete this file?");
+    return agree ? true : false;
+}
 
  $(document).ready(function () {
      console.log("i got here")
@@ -174,5 +178,15 @@ $(function () {
          $("#edit-bucket").find("form").attr("action",url);
      });
 
-});
+     //$(".edit-bucket").click(function(e){
+     //    e.preventDefault();
+     //    console.log("check")
+     //    var bucketName = $(this).closest("div").find(".name").text();
+     //    console.log(bucketName);
+     //    $("#edit-bucket").find("h4").text("Edit " + bucketName);
+     //    $("#edit-bucket").find("#id_name").attr("value", bucketName);
+     //
+     //})
+
+ });
 

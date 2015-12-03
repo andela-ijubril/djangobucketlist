@@ -33,7 +33,7 @@
                             <li class="ui-state-default">
                         <div class="checkbox">
                             <label><a href="/bucketlists/{{ bucket.id }}/items/{{ item.id }}/status/"><input type="checkbox" value="" {% if item.done %} checked {% endif %}  onclick='window.location.assign("/bucketlists/{{ bucket.id }}/items/{{ item.id }}/status/")'/>{{ item.name }}</a></label>
-                            <a href="/bucketlists/{{ bucket.id }}/items/{{ item.id }}/"><span class="glyphicon glyphicon-trash text-muted c-info" data-toggle="tooltip" title="Delete"></span></a>
+                            <a href="/bucketlists/{{ bucket.id }}/items/{{ item.id }}/" class="delete-item"><span class="glyphicon glyphicon-trash text-muted c-info" data-toggle="tooltip" title="Delete"></span></a>
                             <a data-action="/bucketlists/{{ bucket.id }}/items/{{ item.id }}/" href="#edit-bucket" data-toggle="modal" data-placement="top" class="edit-link"><span class="glyphicon glyphicon-pencil text-muted c-info" data-toggle="tooltip" title="Edit"></span></a>
                         </div>
                     </li>
@@ -98,6 +98,20 @@
          console.log(url);
          $("#edit-bucket").find("form").attr("action",url);
      });
+
+     $('.delete-item').click(function(e) {
+        e.preventDefault();
+        if (!confirm("Abeg Are you sure you want to delete this file?")) return;
+        var url = $(this).attr('href');
+        $.ajax({
+            url: url,
+            type:"POST",
+            success: "",
+            error: ""
+        })
+
+
+    })
 
 });
 </script>

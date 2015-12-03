@@ -36,3 +36,5 @@ class IndexViewTest(TestCase):
             'email': 'abiodun.shuaib@andela.com'
         })
         self.assertEqual(response.status_code, 302)
+
+    # def test_can
