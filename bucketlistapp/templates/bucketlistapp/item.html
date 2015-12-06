@@ -1,14 +1,9 @@
+{% extends "bucketlistapp/base.html" %}
 {% load staticfiles %}
 {% load bootstrap %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <link href="{% static 'css/bootstrap.min.css' %}" type="text/css" rel="stylesheet"/>
-    <link href="{% static 'css/style.css' %}" type="text/css" rel="stylesheet"/>
-    <meta charset="UTF-8">
-    <title></title>
-</head>
-<body>
+
+
+{% block content %}
 
 
 
@@ -20,11 +15,16 @@
              <h1>{{ bucket.name }}</h1>
 
 
-                <form method="post" action="/bucketlists/{{ bucket.id }}/items/">
+                <form method="post" action="/bucketlists/{{ bucket.id }}/items/" class="form-inline">
+
+
                     {% csrf_token %}
-                    {{ itemform|bootstrap }}
+                    <div class="form-group">
+                    {{ itemform.name }}
+                        </div>
+
 {#                <input type="text" class="form-control add-todo" placeholder="Add a bucketlist">#}
-                <input type="submit" value="Add">
+                <input type="submit" value="Add" class="btn btn-primary btn-lg">
                 </form>
                     <hr>
 
@@ -73,7 +73,7 @@
         </div>
     </div>
 </div>
-
+{% endblock content %}
 
 
 <script src="{% static 'js/jquery.min.js' %}"></script>

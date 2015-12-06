@@ -172,6 +172,7 @@ var agree=confirm("Are you sure you want to delete this file?");
     });
 
      $(".edit-link").click(function(e){
+         console.log("modal opend")
          e.preventDefault();
          var url = $(this).data("action");
          console.log(url);

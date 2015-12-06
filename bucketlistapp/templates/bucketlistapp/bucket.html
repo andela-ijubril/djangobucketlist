@@ -1,14 +1,10 @@
+{% extends "bucketlistapp/base.html" %}
 {% load staticfiles %}
 {% load bootstrap %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <link href="{% static 'css/bootstrap.min.css' %}" type="text/css" rel="stylesheet"/>
-    <link href="{% static 'css/style.css' %}" type="text/css" rel="stylesheet"/>
-    <meta charset="UTF-8">
-    <title></title>
-</head>
-<body>
+
+
+{% block content %}
+
 
 <div class="container">
 
@@ -43,13 +39,11 @@
                     {% for bucket in buckets %}
 
                         <li class="list-group-item">
-                        <div class="col-xs-12 col-sm-3">
 
-                        </div>
-                        <div class="col-xs-12 col-sm-9">
-                            <a href="/bucketlists/{{ bucket.id }}/items/"><span class="name">{{ bucket.name }}</span></a><br/>
-                            <a href="/bucketlists/{{ bucket.id }}/"><span class="glyphicon glyphicon-trash text-muted c-info" data-toggle="tooltip" title="Delete"></span></a>
-                            <a data-action="/bucketlists/{{ bucket.id }}/"  class="edit-bucket" href="#edit-bucket" data-toggle="modal" data-placement="top" class="edit-link"><span class="glyphicon glyphicon-pencil text-muted c-info" data-toggle="tooltip" title="Edit"></span></a>
+                        <div class="col-sm-9">
+                            <a href="/bucketlists/{{ bucket.id }}/items/" ><span class="name">{{ bucket.name }}</span></a>
+                            <a href="/bucketlists/{{ bucket.id }}/" class="pull-right"><span class="glyphicon glyphicon-trash text-muted c-info" data-toggle="tooltip" title="Delete"></span></a>
+                            <a data-action="/bucketlists/{{ bucket.id }}/" href="#edit-bucket" data-toggle="modal" data-placement="top" class="edit-link pull-right"><span class="glyphicon glyphicon-pencil text-muted c-info" data-toggle="tooltip" title="Edit"></span></a>
                         </div>
                         <div class="clearfix"></div>
                     </li>
@@ -104,14 +98,4 @@
 
 </div>
 
-
-<script src="{% static 'js/jquery.min.js' %}"></script>
-<script src="{% static 'js/jquery-ui.min.js' %}"></script>
-<script src="{% static 'js/jquery.searchable-1.0.0.min.js' %}"></script>
-<script src="{% static 'js/bootstrap.min.js' %}"></script>
-<script src="{% static 'js/script.js' %}"></script>
-
-
-
-</body>
-</html>
+{% endblock content %}

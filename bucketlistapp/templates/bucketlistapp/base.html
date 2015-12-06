@@ -9,72 +9,15 @@
 </head>
 <body>
 
-
-
-
-<div class="container">
-    <div class="row">
-        <div class="col-md-6">
-            <div class="todolist not-done">
-             <h1>Bucket list</h1>
-                <input type="text" class="form-control add-todo" placeholder="Add Item">
-                    <hr>
-                    <ul id="sortable" class="list-unstyled">
-                    <li class="ui-state-default">
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox" value="" />Take out the trash</label>
-                        </div>
-                    </li>
-                    <li class="ui-state-default">
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox" value="" />Buy bread</label>
-                        </div>
-                    </li>
-                    <li class="ui-state-default">
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox" value="" />Teach penguins to fly</label>
-                        </div>
-                    </li>
-                </ul>
-                                    <hr>
-<div class="row" style="margin:20px;">
-
-                                   <div class="col-md-4">
-                                <button id="checkAll" class="btn btn-default">Clear</button>
-                                </div>
-                                                                   <div class="col-md-4">
-
-                                <button id="saveAll" class="btn btn-primary">Save</button>
-                                   </div>
-                                                                   <div class="col-md-4">
-
-                                <button id="sendAll" class="btn btn-success">Send Order</button>
-                                   </div>
-                                   </div>
- </div>
-
-        </div>
-        <div class="col-md-6">
-            <div class="todolist">
-             <h1>Old Items</h1>
-                <ul id="done-items" class="list-unstyled">
-                    <li>Some item <button class="remove-item btn btn-default btn-xs pull-right"><span class="glyphicon glyphicon-remove"></span></button></li>
-
-                </ul>
-            </div>
-        </div>
-    </div>
-</div>
+{% block sidebar %}{% endblock sidebar %}
+{% block content %}{% endblock content %}
 
 
 <script src="{% static 'js/jquery.min.js' %}"></script>
 <script src="{% static 'js/jquery-ui.min.js' %}"></script>
-        <script src="{% static 'js/bootstrap.min.js' %}"></script>
-
-
+<script src="{% static 'js/jquery.searchable-1.0.0.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/script.js' %}"></script>
 
 </body>
 </html>

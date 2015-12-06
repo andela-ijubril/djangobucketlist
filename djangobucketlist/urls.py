@@ -19,33 +19,12 @@ from bucketlistapi import views
 from bucketlistapp import views as app_view
 from rest_framework.authtoken import views as rest_views
 from django.contrib.auth.views import logout
+import bucketlistapp.urls
+import bucketlistapi.urls
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
-
-    url(r'^$', app_view.IndexView.as_view(), name='index'),
-    url(r'^register$', app_view.RegisterView.as_view(), name='register'),
-    url(r'^login$', app_view.LoginView.as_view(), name='login'),
-    url(r'^logout$', logout, {'next_page': '/'}),
-
-    url(r'^bucketlists/$', app_view.BucketlistAppView.as_view(), name='bucket_list'),
-    url(r'^bucketlists/(?P<bucket_id>[0-9]+)/$', app_view.UpdateBucketlistView.as_view(), name='update_bucket_list'),
-    url(r'^bucketlists/items/$', app_view.BucketlistItemAppView.as_view(), name='bucket_list'),
-    url(r'^bucketlists/(?P<bucketlist>[0-9]+)/items/$', app_view.BucketlistItemAppView.as_view(), name='bucket_list_item'),
-    url(r'^bucketlists/(?P<bucketlist>[0-9]+)/items/(?P<item>[0-9]+)/$', app_view.UpdateBucketlistItemView.as_view(), name='update_bucketlist_item'),
-    url(r'^bucketlists/(?P<bucketlist>[0-9]+)/items/(?P<item>[0-9]+)/status/$', app_view.ItemStatusView.as_view(), name='bucket_list_item'),
-
-
-
-
-    url(r'^auth/', include('rest_framework.urls', namespace='rest_framework')),
-    url(r'^api/users/$', views.UserList.as_view(), name='all_users'),
-    url(r'^api/users/(?P<pk>[0-9]+)/$', views.UserDetail.as_view()),
-    url(r'^api/bucketlists/$', views.BucketlistView.as_view(), name='bucket_list'),
-    url(r'^api/bucketlists/(?P<pk>[0-9]+)/$', views.BucketListDetailView.as_view(), name='bucketlist_detail'),
-    url(r'^api/bucketlists/(?P<pk>[0-9]+)/items/$', views.BucketlistItemView.as_view(), name='bucketlist_item'),
-    url(r'^api/bucketlists/(?P<pk>[0-9]+)/items/(?P<id>[0-9]+)$', views.BucketListDetailView.as_view(), name='item_detail'),
-    url(r'^api_token/$', rest_views.obtain_auth_token),
+    url(r'^', include(bucketlistapp.urls)),
+    url(r'^api/', include(bucketlistapi.urls)),
     url(r'^docs/', include('rest_framework_swagger.urls')),
-
 ]
