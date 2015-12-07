@@ -3,6 +3,11 @@
 {% load bootstrap %}
 
 
+{% block sidebar %}
+
+   {% include "bucketlistapp/partials/sidebar.html" %}
+{% endblock sidebar %}
+
 {% block content %}
 
 
@@ -45,9 +50,7 @@
 <div class="row" style="margin:20px;">
 
                                    </div>
-             <div>
-                <a href="/logout" class="btn btn-primary">logout</a>
-            </div>
+
  </div>
 
         </div>

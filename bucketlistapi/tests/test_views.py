@@ -50,10 +50,19 @@ class BucketListAPITest(APITestCase):
         self.assertEqual(response.status_code, 204)
 
     def test_user_can_create_an_item(self):
-        url = reverse("bucketlist_item", kwargs={"pk": self.bucketlist1.id})
+        url = reverse("bucketlist_item", kwargs={"bucket_id": self.bucketlist1.id})
         data = {"name": "get a passport"}
         response = self.client.post(url, data)
         self.assertEqual(response.status_code, 201)
 
+    def test_user_can_edit_an_item(self):
+        url = reverse("item_detail", kwargs={"bucket_id": self.bucketlist1.id, "item_id": self.item1.id})
+        data = {"name": "The updated item"}
+        response = self.client.put(url, data)
+        self.assertEqual(response.status_code, 200)
 
+    def test_user_can_delete_an_item(self):
+        url = reverse("item_detail", kwargs={"bucket_id": self.bucketlist1.id, "item_id": self.item1.id})
+        response = self.client.delete(url)
+        self.assertEqual(response.status_code, 204)
 

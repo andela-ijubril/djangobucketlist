@@ -1,6 +1,19 @@
 body{
     background-color:#EEEEEE;
+    padding: 0;
+    margin: 0;
 }
+
+.logo{
+    width: 150px;
+    height: auto;
+    margin: 20px auto -80px;
+    display: block;
+    position: relative;
+    z-index: 2;
+
+}
+
 .todolist{
     background-color:#FFF;
     padding:20px 20px 10px 20px;
@@ -39,22 +52,6 @@ li.ui-state-default:last-child{
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 @import url(//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css);
 
 body {
@@ -63,6 +60,28 @@ body {
 .panel > .list-group .list-group-item:first-child {
     /*border-top: 1px solid rgb(204, 204, 204);*/
 }
+.panel-info {
+    padding: 100px 50px 30px;
+}
+.panel-info > .panel-heading {
+    padding: 0;
+    background-color: transparent;
+}
+.panel-title {
+    font-size: 30px;
+}
+
+
+.controls {
+    padding: 10px 0;
+}
+
+.controls > .btn-lg {
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+
 @media (max-width: 767px) {
     .visible-xs {
         display: inline-block !important;
@@ -104,7 +123,10 @@ body {
 
 .c-list {
     padding: 0px;
-    min-height: 44px;
+    min-height: 70px;
+}
+.c-list > .row{
+   height: 100%;
 }
 .title {
     display: inline-block;
@@ -142,7 +164,7 @@ ul.c-controls li a:hover {
 
 .name {
     font-size: 1.7em;
-    font-weight: 700;
+    font-weight: 300;
 }
 
 .c-info {
@@ -153,31 +175,8 @@ ul.c-controls li a:hover {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /*home page landing page*/
 
-body
-{
-    background: url('http://farm3.staticflickr.com/2832/12303719364_c25cecdc28_b.jpg') fixed;
-    background-size: cover;
-    padding: 0;
-    margin: 0;
-}
 
 .wrap
 {
@@ -201,6 +200,9 @@ p.form-title
     text-transform: uppercase;
     letter-spacing: 4px;
 }
+
+
+
 
 
 
@@ -350,8 +352,18 @@ form.login a:hover
 }
 
 
-
 /*visited edit link*/
 a:visited{
     text-decoration: none;
+}
+
+
+/* sidebar styling */
+.sidebar {
+	position: fixed;
+    left: 30px;
+    height: 400px;
+    width: 262px;
+
+    top: 5%
 }

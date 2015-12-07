@@ -3,6 +3,12 @@
 {% load bootstrap %}
 
 
+{% block sidebar %}
+
+   {% include "bucketlistapp/partials/sidebar.html" %}
+{% endblock sidebar %}
+
+
 {% block content %}
 
 
@@ -14,9 +20,10 @@
         <div class="col-xs-12 col-sm-offset-3 col-sm-6">
             <div class="panel panel-default">
                 <div class="panel-heading c-list">
+
                     <span class="title">Bucketlist</span>
                     <ul class="pull-right c-controls">
-                        <li><a href="#cant-do-all-the-work-for-you" data-toggle="tooltip" data-placement="top" title="Add Contact"><i class="glyphicon glyphicon-plus"></i></a></li>
+                        <li><a href="#bucket-modal" data-toggle="tooltip" data-placement="top" title="Add Contact"><i class="glyphicon glyphicon-plus"></i></a></li>
                         <li><a href="#" class="hide-search" data-command="toggle-search" data-toggle="tooltip" data-placement="top" title="Toggle Search">
 
                             <span class="glyphicon glyphicon-search text-muted"></span>
@@ -40,7 +47,7 @@
 
                         <li class="list-group-item">
 
-                        <div class="col-sm-9">
+                        <div class="col-sm-12">
                             <a href="/bucketlists/{{ bucket.id }}/items/" ><span class="name">{{ bucket.name }}</span></a>
                             <a href="/bucketlists/{{ bucket.id }}/" class="pull-right"><span class="glyphicon glyphicon-trash text-muted c-info" data-toggle="tooltip" title="Delete"></span></a>
                             <a data-action="/bucketlists/{{ bucket.id }}/" href="#edit-bucket" data-toggle="modal" data-placement="top" class="edit-link pull-right"><span class="glyphicon glyphicon-pencil text-muted c-info" data-toggle="tooltip" title="Edit"></span></a>
@@ -55,7 +62,7 @@
         </div>
 	</div>
 
-    <div id="cant-do-all-the-work-for-you" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div id="bucket-modal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
                 <div class="modal-header">
@@ -66,7 +73,6 @@
                     <form method="post" action="/bucketlists/">
                     {% csrf_token %}
                     {{ bucketlistform|bootstrap }}
-{#                <input type="text" class="form-control add-todo" placeholder="Add a bucketlist">#}
                 <input type="submit" value="Add">
                 </form>
                 </div>

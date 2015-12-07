@@ -114,9 +114,9 @@ $(function () {
         event.preventDefault();
         window.parent.location = "http://bootsnipp.com/iframe/4l0k2";
     });
-    $('a[href="#cant-do-all-the-work-for-you"]').on('click', function(event) {
+    $('a[href="#bucket-modal"]').on('click', function(event) {
         event.preventDefault();
-        $('#cant-do-all-the-work-for-you').modal('show');
+        $('#bucket-modal').modal('show');
     })
 
     $('[data-command="toggle-search"]').on('click', function(event) {
