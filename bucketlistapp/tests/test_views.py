@@ -21,9 +21,14 @@ class BucketListAPPTest(TestCase):
         Bucketlist.objects.all().delete()
 
     def test_user_can_create_a_bucketlist(self):
-        url = reverse("bucketlists")
+        url = reverse("bucketlistapp")
         data = {"name": "bla bla bla"}
         response = self.client.post(url, data)
+        self.assertEqual(response.status_code, 302)
+
+    def test_user_can_view_bucketlist(self):
+        url = reverse("bucketlistapp")
+        response = self.client.get(url)
         self.assertEqual(response.status_code, 302)
 
     def test_user_can_edit_a_bucketlist(self):
