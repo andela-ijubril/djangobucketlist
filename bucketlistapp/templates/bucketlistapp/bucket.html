@@ -1,0 +1,107 @@
+{% extends "bucketlistapp/base.html" %}
+{% load staticfiles %}
+{% load bootstrap %}
+
+
+{% block sidebar %}
+
+   {% include "bucketlistapp/partials/sidebar.html" %}
+{% endblock sidebar %}
+
+
+{% block content %}
+
+
+<div class="container">
+
+
+    <div class="row">
+
+        <div class="col-xs-12 col-sm-offset-3 col-sm-6">
+            <div class="panel panel-default">
+                <div class="panel-heading c-list">
+
+                    <span class="title">Bucketlist</span>
+                    <ul class="pull-right c-controls">
+                        <li><a href="#bucket-modal" data-toggle="tooltip" data-placement="top" title="Add Contact"><i class="glyphicon glyphicon-plus"></i></a></li>
+                        <li><a href="#" class="hide-search" data-command="toggle-search" data-toggle="tooltip" data-placement="top" title="Toggle Search">
+
+                            <span class="glyphicon glyphicon-search text-muted"></span>
+                        </a></li>
+                    </ul>
+                </div>
+
+                <div class="row" style="display: none;">
+                    <div class="col-xs-12">
+                        <div class="input-group c-search">
+                            <input type="text" class="form-control" id="contact-list-search">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" type="button">Go</button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <ul class="list-group" id="contact-list">
+                    {% for bucket in buckets %}
+
+                        <li class="list-group-item">
+
+                        <div class="col-sm-12">
+                            <a href="/bucketlists/{{ bucket.id }}/items/" ><span class="name">{{ bucket.name }}</span></a>
+                            <a href="/bucketlists/{{ bucket.id }}/" class="pull-right"><span class="glyphicon glyphicon-trash text-muted c-info" data-toggle="tooltip" title="Delete"></span></a>
+                            <a data-action="/bucketlists/{{ bucket.id }}/" href="#edit-bucket" data-toggle="modal" data-placement="top" class="edit-link pull-right"><span class="glyphicon glyphicon-pencil text-muted c-info" data-toggle="tooltip" title="Edit"></span></a>
+                        </div>
+                        <div class="clearfix"></div>
+                    </li>
+
+                    {% endfor %}
+
+                </ul>
+            </div>
+        </div>
+	</div>
+
+    <div id="bucket-modal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title" id="mySmallModalLabel">Add a bucketlist</h4>
+                </div>
+                <div class="modal-body">
+                    <form method="post" action="/bucketlists/">
+                    {% csrf_token %}
+                    {{ bucketlistform|bootstrap }}
+                <input type="submit" value="Add">
+                </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="edit-bucket" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title" id="mySmallModalLabel">Edit a bucketlist</h4>
+                </div>
+                <div class="modal-body">
+                    <form method="post" action="">
+                    {% csrf_token %}
+                    {{ bucketlistform|bootstrap }}
+{#                <input type="text" class="form-control add-todo" placeholder="Add a bucketlist">#}
+                <input type="submit" value="Edit">
+                </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScrip Search Plugin -->
+    <script src="//rawgithub.com/stidges/jquery-searchable/master/dist/jquery.searchable-1.0.0.min.js"></script>
+
+</div>
+
+{% endblock content %}

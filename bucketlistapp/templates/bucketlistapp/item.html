@@ -1,0 +1,123 @@
+{% extends "bucketlistapp/base.html" %}
+{% load staticfiles %}
+{% load bootstrap %}
+
+
+{% block sidebar %}
+
+   {% include "bucketlistapp/partials/sidebar.html" %}
+{% endblock sidebar %}
+
+{% block content %}
+
+
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6 col-sm-offset-3">
+            <div class="todolist not-done">
+             <h1>{{ bucket.name }}</h1>
+
+
+                <form method="post" action="/bucketlists/{{ bucket.id }}/items/" class="form-inline">
+
+
+                    {% csrf_token %}
+                    <div class="form-group">
+                    {{ itemform.name }}
+                        </div>
+
+{#                <input type="text" class="form-control add-todo" placeholder="Add a bucketlist">#}
+                <input type="submit" value="Add" class="btn btn-primary btn-lg">
+                </form>
+                    <hr>
+
+                    <ul id="sortable" class="list-unstyled">
+                        {% for item in items %}
+                            <li class="ui-state-default">
+                        <div class="checkbox">
+                            <label><a href="/bucketlists/{{ bucket.id }}/items/{{ item.id }}/status/"><input type="checkbox" value="" {% if item.done %} checked {% endif %}  onclick='window.location.assign("/bucketlists/{{ bucket.id }}/items/{{ item.id }}/status/")'/>{{ item.name }}</a></label>
+                            <a href="/bucketlists/{{ bucket.id }}/items/{{ item.id }}/" class="delete-item"><span class="glyphicon glyphicon-trash text-muted c-info" data-toggle="tooltip" title="Delete"></span></a>
+                            <a data-action="/bucketlists/{{ bucket.id }}/items/{{ item.id }}/" href="#edit-bucket" data-toggle="modal" data-placement="top" class="edit-link"><span class="glyphicon glyphicon-pencil text-muted c-info" data-toggle="tooltip" title="Edit"></span></a>
+                        </div>
+                    </li>
+
+                        {% endfor %}
+
+                </ul>
+                                    <hr>
+<div class="row" style="margin:20px;">
+
+                                   </div>
+
+ </div>
+
+        </div>
+
+    </div>
+
+<div id="edit-bucket" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title" id="mySmallModalLabel">Edit a bucketlist</h4>
+                </div>
+                <div class="modal-body">
+                    <form method="post" action="">
+                    {% csrf_token %}
+                    {{ itemform|bootstrap }}
+{#                <input type="text" class="form-control add-todo" placeholder="Add a bucketlist">#}
+                <input type="submit" value="Edit">
+                </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+
+<script src="{% static 'js/jquery.min.js' %}"></script>
+<script src="{% static 'js/jquery-ui.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+{#<script src="{% static 'js/script.js' %}"></script>#}
+
+<script>
+     $(document).ready(function () {
+     console.log("i got here")
+    $('.forgot-pass').click(function(event) {
+      $(".pr-wrap").toggleClass("show-pass-reset");
+    });
+
+    $('.pass-reset-submit').click(function(event) {
+      $(".pr-wrap").removeClass("show-pass-reset");
+    });
+
+     $(".edit-link").click(function(e){
+         e.preventDefault();
+         var url = $(this).data("action");
+         console.log(url);
+         $("#edit-bucket").find("form").attr("action",url);
+     });
+
+     $('.delete-item').click(function(e) {
+        e.preventDefault();
+        if (!confirm("Abeg Are you sure you want to delete this file?")) return;
+        var url = $(this).attr('href');
+        $.ajax({
+            url: url,
+            type:"POST",
+            success: "",
+            error: ""
+        })
+
+
+    })
+
+});
+</script>
+
+</body>
+</html>
