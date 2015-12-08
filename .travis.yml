@@ -17,17 +17,16 @@ after_success:
 deploy:
   provider: heroku
   api_key:
-    secure: GgKGabw00v3qKAmukl91u5ig50Dj4KkdoEv9gFVKIj/fUTZQnHRm+bu1b6c41fQqXEDdF11nneLIuLtuARu4ejiA1BL1m7REQIlCipxGZcYvwP/TfoqkkaGehXhmowIi19sxUhKZtfB8Zu7deAncM1fN6k9vVJ/BOGZJ/M6Chg3T3jIpDxutWSNO+qzS1NCWlEr3/t7FGnpkVxITgQHtdXBXbDxq9kCxHQbqBDWERmPHOpBewMrhoaGk1XBJvbPAzaRqpqisThx5uAtoCK1dShED2Ncy7g3noeOv/2SHPx7Ki4IOjaR3oPjEJviHh/TZS/bESIECWgeEcdwaMfNcyh4loaocxfcIGumB7siAZIhchuuNUEn7dkdw6HaG0756WuUrOYr19jkMAPHQRGJ0KhwXBxLcTujlBOBUnNG0w27qy9jA5xdGUUk3+ugvaZ0mMkvPDxUumJnVNMMm7KUxE7LEQFIQ2wF0d/2ekyOH+nPfe4I7bExhBceBS6pclqT4wFt+cypYsCuk0NYKNVTlhFZ1VuSknDz0FSL3pr8GOifTPwPCdW4wUplNnjh7ZHneM8WtSsowifEnwOX8UA2PEFiAY29SXrZMQOipW8g9jtxob2li3oWnqzaDjYG7JsyOgIg+g1LkDLA9Ys393qk8QYV/ZMEMtgMJ+vVAQJ3cir4=
+    secure: RSiy8NZe4g10wDtFm23rKZ/MWWKMyRIPMfQSj7Vr0X48hrF87vbPudSkYSEf1ZmxWt7FaEvXecw4iiCqx7ECrC3QCldreRfSgHf1Gs7fgn+XlUwZ4hSpyFcmRAFonjAVjHwQjh0UdlZovAbRyz4z1WmFfW+RwxJ21ZoCx8SAClekH/Av4W0jy/zLnRf2GapIoz0VVZITtp4qexYsVcdr+WLVJaoYXiTR1rz0FpiNnCKUWBSweqntwonmEkvFzHGwJgjZApsbmtg8omTZeP7cUDw/6PwWcF/51nlO2qHk5Q/hZqrVjz8vUbKDrzUjPvhPuIFR0SOzZkWIX1jSJkt4YjNUL6puBLvIXJk1vtzbYwJLWvFxswWfr4FmYGcjd6Y0zDSGM0ke7PS/ndjI83A/IyL7kaSixCpHvHgIwsTZAMYyTagHzEUsOxGz1x8RfKP6bcqgHIgiYaWJIfKvGqBbOA8MstGUgfsK9MEvm1qVSvjm0XU3jPrY6qKNUNtm5YZKKiYvlRTE8QXceN6rO7yNuZUbbtgFp7tS/+a/S/ZV4lRt01vq5ety1RQP1Y1shAk5mHzxHd6yl7eLM6cpMyiKstMVPKacZgyO2OpOjhmzSB67HBW62tiH9xM3nz/EvQVgUCjbuFR70Smx+LJrgfCbNSFijkVvTdK4QTcrnYNmTzo=
   strategy: git
   app:
     develop: awesomebucket
   run:
-    - "export DJANGO_SETTINGS_MODULE=djangobucketlist.settings.production"
-    - "python manage.py collectstatic --noinput"
-    - "python manage.py makemigrations"
-    - "python manage.py migrate auth"
-    - "python manage.py migrate"
-    - "python manage.py syncdb --noinput"
+  - export DJANGO_SETTINGS_MODULE=djangobucketlist.settings.production
+  - python manage.py collectstatic --noinput
+  - python manage.py makemigrations
+  - python manage.py migrate auth
+  - python manage.py migrate
+  - python manage.py syncdb --noinput
 after_deploy:
-  - "heroku ps:scale web=1 --app awesomebucket"
-
+- heroku ps:scale web=1 --app awesomebucket
