@@ -36,3 +36,5 @@ class BucketListAPPTest(TestCase):
         data = {"name": "The updated bucketlist"}
         response = self.client.put(url, data)
         self.assertEqual(response.status_code, 302)
+
+
