@@ -1,5 +1,5 @@
 # Django powered bucketlist application
-[![Coverage Status](https://coveralls.io/repos/andela-ijubril/djangobucketlist/badge.svg?branch=master&service=github)](https://coveralls.io/github/andela-ijubril/djangobucketlist?branch=master)
+[![Coverage Status](https://coveralls.io/repos/andela-ijubril/djangobucketlist/badge.svg?branch=develop&service=github)](https://coveralls.io/github/andela-ijubril/djangobucketlist?branch=develop)
 [![Build Status](https://api.travis-ci.org/andela-ijubril/djangobucketlist.svg?branch=master)](https://api.travis-ci.org/andela-ijubril/djangobucketlist)
 
 ![My Bucketlist](http://3.bp.blogspot.com/-GWeanJf2zR4/UQexkAuMA-I/AAAAAAAAAwg/sKi4y94TCcE/s1600/Bucket-List-e1336246406457.png)
