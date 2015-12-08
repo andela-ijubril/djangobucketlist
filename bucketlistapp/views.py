@@ -127,28 +127,6 @@ class BucketlistItemAppView(LoginRequiredMixin, TemplateView):
 
         return redirect('/bucketlists/' + kwargs['bucketlist'] + '/items/', context_instance=RequestContext(request))
 
-        # if form.is_valid():
-        #
-        #     # import pdb
-        #     # pdb.set_trace()
-        #     bucketlist = form.save()
-        #     bucketlist.created_by = request.user
-        #     bucketlist.save()
-        #     # import pdb
-        #     # pdb.set_trace()
-        #     return redirect('/api/bucketlists/', context_instance=RequestContext(request))
-
-        # else:
-        #     context = super(BucketlistAppView, self).get_context_data(**kwargs)
-        #     context['bucketlistform'] = form
-        #     return render(request, self.template_name, context)
-
-
-class DeleteBucketlistView(LoginRequiredMixin, TemplateView):
-
-
-    def get(self, request, **kwargs):
-        pass
 
 
 class UpdateBucketlistView(LoginRequiredMixin, TemplateView):
@@ -164,12 +142,7 @@ class UpdateBucketlistView(LoginRequiredMixin, TemplateView):
         bucket_list.name = name
         bucket_list.save()
 
-        # item = BucketlistItem(name=name, bucketlist=Bucketlist.objects.get(id=kwargs['bucketlist']))
-        # item.save()
-
-        # return redirect('/bucketlists/' + kwargs['bucketlist'] + '/items/', context_instance=RequestContext(request))
         return redirect('/bucketlists/', context_instance=RequestContext(request))
-
 
 
 class UpdateBucketlistItemView(LoginRequiredMixin, TemplateView):
@@ -182,8 +155,6 @@ class UpdateBucketlistItemView(LoginRequiredMixin, TemplateView):
 
     def post(self, request, **kwargs):
         item = BucketlistItem.objects.get(id=kwargs['item'])
-        # import pdb
-        # pdb.set_trace()
         name = request.POST.get('name')
         item.name = name
         item.save()

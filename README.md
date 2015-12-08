@@ -20,7 +20,7 @@ Awesome bucket is built with the following stack:
 * [django swagger](http://django-rest-swagger.readthedocs.org/en/latest/) - An API documentation generator for Swagger UI and Django REST Framework.
 
 ### API Documentation
-The Api documentation can be found [here](http://awesomebucket.herokuapp.com/docs)
+The Api documentation can be found [here](http://awesomebucket.herokuapp.com/api/docs)
 ## Requirements
 To install and run this application, you need to have python installed on your machine.
 ### Installation
