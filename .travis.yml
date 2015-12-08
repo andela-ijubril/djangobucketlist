@@ -21,6 +21,7 @@ deploy:
   strategy: git
   app:
     develop: awesomebucket
+  skip_cleanup: true
   run:
   - export DJANGO_SETTINGS_MODULE=djangobucketlist.settings.production
   - python manage.py collectstatic --noinput
