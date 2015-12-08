@@ -8,22 +8,11 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status, permissions
 
-# Create your views here.
-
-
-# class BucketlistView(generics.ListAPIView):
-#
-#     model = Bucketlist
-#     serializer_class = BucketlistSerializer
-
 
 class BucketlistView(APIView):
 
-
     permission_classes = (permissions.IsAuthenticated,)
-    # queryset = Bucketlist.objects.all()
     serializer_class = BucketlistSerializer
-    # permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
     model = Bucketlist
 
     def perform_create(self, serializer):
@@ -34,7 +23,6 @@ class BucketlistView(APIView):
         Retrieve all the bucketlist for the current user
         """
         bucketlists = Bucketlist.objects.filter(created_by=self.request.user).all()
-        # bucketlists = Bucketlist.objects.all()
         serializer = BucketlistSerializer(bucketlists, many=True)
         return Response(serializer.data)
 
@@ -44,7 +32,6 @@ class BucketlistView(APIView):
         """
 
         serializer = BucketlistSerializer(data=request.data)
-
         if serializer.is_valid():
             serializer.save(created_by=self.request.user)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -132,8 +119,6 @@ class BucketlistItemView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-# class BucketlistItemDetailView(generics.ListAPIView):
-
 class BucketlistItemDetailView(APIView):
 
     permission_classes = (permissions.IsAuthenticated,)
@@ -141,9 +126,7 @@ class BucketlistItemDetailView(APIView):
     def get_bucket_item(self, bucket_id, item_id):
 
         try:
-            # bucketitem = BucketlistItem.objects.filter(pk=bucketitemid, bucketlist_id=bucket).first()
-            # import pdb
-            # pdb.set_trace()
+
             return BucketlistItem.objects.filter(pk=item_id, bucketlist_id=bucket_id).get()
 
         except BucketlistItem.DoesNotExist:
@@ -162,6 +145,13 @@ class BucketlistItemDetailView(APIView):
         return Response(serializer.data)
 
     def put(self, request, bucket_id, item_id, format=None):
+        """
+        Update a single bucket item
+        :param bucket_id:
+        :param item_id:
+
+        :return: serialized data of the item
+        """
         bucketlistitem = self.get_bucket_item(bucket_id, item_id)
 
         serializer = BucketlistItemSerializer(bucketlistitem, request.data)
@@ -172,6 +162,12 @@ class BucketlistItemDetailView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, bucket_id, item_id, format=None):
+
+        """
+        Delete a single bucket item with the item_id passed
+        :param bucket_id:
+        :param item_id:
+        """
         bucketlistitem = self.get_bucket_item(bucket_id, item_id)
 
         bucketlistitem.delete()
