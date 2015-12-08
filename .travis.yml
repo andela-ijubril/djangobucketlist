@@ -21,6 +21,7 @@ deploy:
   strategy: git
   app:
     develop: awesomebucket
+  skip_cleanup: true
   run:
   - export DJANGO_SETTINGS_MODULE=djangobucketlist.settings.production
   - python manage.py collectstatic --noinput
@@ -28,5 +29,10 @@ deploy:
   - python manage.py migrate auth
   - python manage.py migrate
   - python manage.py syncdb --noinput
+before_deploy:
+  - git config --global user.email 'bot@travis-ci.com'
+  - git config --global user.name 'Bot - Travis CI'
+  - git checkout $TRAVIS_BRANCH
+  - git commit -am 'Travis Build'
 after_deploy:
 - heroku ps:scale web=1 --app awesomebucket
