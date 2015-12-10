@@ -10,6 +10,8 @@ class BucketListAPPTest(TestCase):
         self.client = Client()
 
         self.user = User.objects.create(username='jubril', password='issa')
+        self.user.set_password('issa')
+        self.user.save()
         self.login = self.client.login(username='jubril', password='issa')
         self.bucketlist1 = Bucketlist.objects.create(name='go to paris', created_by=self.user)
         self.bucketlist2 = Bucketlist.objects.create(name='Become a world class developer', created_by=self.user)
@@ -21,20 +23,43 @@ class BucketListAPPTest(TestCase):
         Bucketlist.objects.all().delete()
 
     def test_user_can_create_a_bucketlist(self):
-        url = reverse("bucketlistapp")
+        self.assertEqual(self.login, True)
+        url = reverse("bucketlists")
         data = {"name": "bla bla bla"}
         response = self.client.post(url, data)
         self.assertEqual(response.status_code, 302)
 
     def test_user_can_view_bucketlist(self):
-        url = reverse("bucketlistapp")
+        url = reverse("bucketlists")
         response = self.client.get(url)
-        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.status_code, 200)
 
     def test_user_can_edit_a_bucketlist(self):
         url = reverse("update_bucket_list", kwargs={"bucket_id": self.bucketlist1.id})
         data = {"name": "The updated bucketlist"}
-        response = self.client.put(url, data)
+        response = self.client.post(url, data)
+        self.assertEqual(response.status_code, 302)
+
+    def test_user_can_delete_a_bucketlist(self):
+        url = reverse("update_bucket_list", kwargs={"bucket_id": self.bucketlist1.id})
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 302)
+
+    def test_user_can_create_an_item(self):
+        url = reverse("bucketlist_item", kwargs={"bucketlist": self.bucketlist1.id})
+        data = {"name": "get a passport"}
+        response = self.client.post(url, data)
+        self.assertEqual(response.status_code, 302)
+
+    def test_user_can_edit_an_item(self):
+        url = reverse("update_bucketlist_item", kwargs={"bucketlist": self.bucketlist1.id, "item": self.item1.id})
+        data = {"name": "The updated item"}
+        response = self.client.post(url, data)
+        self.assertEqual(response.status_code, 302)
+
+    def test_user_can_delete_an_item(self):
+        url = reverse("update_bucketlist_item", kwargs={"bucketlist": self.bucketlist1.id, "item": self.item1.id})
+        response = self.client.get(url)
         self.assertEqual(response.status_code, 302)
 
 
