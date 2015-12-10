@@ -29,12 +29,18 @@ class BucketListAPITest(APITestCase):
         self.assertEqual(response.status_code, 200)
 
     def test_user_can_create_a_bucketlist(self):
+        """
+        Test user can create a bucketlist
+        """
         url = reverse("bucket_list")
         data = {"name": "bla bla bla"}
         response = self.client.post(url, data)
         self.assertEqual(response.status_code, 201)
 
     def test_user_can_view_bucketlist(self):
+        """
+        Test user can view his bucketlist
+        """
         url = reverse("bucket_list")
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)

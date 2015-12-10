@@ -77,24 +77,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'djangobucketlist.wsgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/1.8/ref/settings/#databases
-
-# DATABASES = {
-#     'default': {
-#         # 'ENGINE': 'django.db.backends.sqlite3',
-#         # 'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'bucketlist',
-#         'USER': 'andeladev',
-#         'PASSWORD': '  ',
-#         'HOST': '127.0.0.1',
-#         'PORT': '5432',
-#     }
-# }
-
-
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
 
@@ -124,13 +106,12 @@ STATIC_ROOT = os.path.join(BASE_DIR, '..', 'staticfiles')
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 REST_FRAMEWORK = {
-    # 'PAGE_SIZE': 10,
+    'PAGE_SIZE': 10,
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.TokenAuthentication',)
-        # 'rest_framework.authentication.SessionAuthentication',)
-    # 'DEFAULT_PERMISSION_CLASSES': (
-    #     'rest_framework.permissions.IsAuthenticated',
-    # ),
+        'rest_framework.authentication.TokenAuthentication',),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
     # 'PAGINATE_BY': 10,
 }
 TEMPLATE_DIRS = (
