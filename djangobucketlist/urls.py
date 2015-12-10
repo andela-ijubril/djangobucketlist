@@ -7,5 +7,4 @@ urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^', include(bucketlistapp.urls)),
     url(r'^api/', include(bucketlistapi.urls)),
-    url(r'^docs/', include('rest_framework_swagger.urls')),
 ]
