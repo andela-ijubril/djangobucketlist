@@ -40,7 +40,8 @@ class BucketlistView(APIView):
 
 class BucketListDetailView(APIView):
 
-    def get_bucket_object(self, pk):
+    @staticmethod
+    def get_bucket_object(pk):
         try:
             return Bucketlist.objects.get(pk=pk)
         except Bucketlist.DoesNotExist:
@@ -84,12 +85,6 @@ class BucketlistItemView(APIView):
     serializer_class = BucketlistItemSerializer
     model = BucketlistItem
 
-    def get_bucket_object(self, bucket_id):
-        try:
-            return Bucketlist.objects.filter(pk=bucket_id, created_by=self.request.user).first()
-        except Bucketlist.DoesNotExist:
-            raise Http404
-
     def perform_create(self, serializer):
         serializer.save(created_by=self.request.user)
 
@@ -98,7 +93,7 @@ class BucketlistItemView(APIView):
         retrieve all the item in the bucketlist
         :param bucket_id:
         """
-        items = BucketlistItem.objects.filter(bucketlist=self.get_bucket_object(bucket_id)).all()
+        items = BucketlistItem.objects.filter(bucketlist=BucketListDetailView.get_bucket_object(bucket_id)).all()
 
         serializer = BucketlistSerializer(items, many=True)
         return Response(serializer.data)
@@ -109,7 +104,7 @@ class BucketlistItemView(APIView):
         :param bucket_id:
         """
 
-        bucket = self.get_bucket_object(bucket_id)
+        bucket = BucketListDetailView.get_bucket_object(bucket_id)
 
         serializer = BucketlistItemSerializer(data=request.data)
 
@@ -123,10 +118,9 @@ class BucketlistItemDetailView(APIView):
 
     permission_classes = (permissions.IsAuthenticated,)
 
-    def get_bucket_item(self, bucket_id, item_id):
-
+    @staticmethod
+    def get_bucket_item(bucket_id, item_id):
         try:
-
             return BucketlistItem.objects.filter(pk=item_id, bucketlist_id=bucket_id).get()
 
         except BucketlistItem.DoesNotExist:

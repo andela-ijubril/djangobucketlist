@@ -16,7 +16,7 @@ class BucketListAPPTest(TestCase):
         self.bucketlist1 = Bucketlist.objects.create(name='go to paris', created_by=self.user)
         self.bucketlist2 = Bucketlist.objects.create(name='Become a world class developer', created_by=self.user)
         self.item1 = BucketlistItem.objects.create(name='get a passport', bucketlist=self.bucketlist1)
-        self.item2 = BucketlistItem.objects.create(name='contribute to open source', bucketlist=self.bucketlist2)
+        self.item2 = BucketlistItem.objects.create(name='contribute to open source', bucketlist=self.bucketlist2, done=True)
 
     def tearDown(self):
         User.objects.all().delete()
@@ -67,4 +67,13 @@ class BucketListAPPTest(TestCase):
         response = self.client.get(url)
         self.assertEqual(response.status_code, 302)
 
+    def test_user_can_mark_item_done(self):
+        url = reverse("bucket_list_item_status", kwargs={"bucketlist": self.bucketlist1.id, "item": self.item1.id})
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 302)
+
+    def test_can_unmark_an_item(self):
+        url = reverse("bucket_list_item_status", kwargs={"bucketlist": self.bucketlist2.id, "item": self.item2.id})
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 302)
 

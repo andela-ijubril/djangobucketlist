@@ -1,11 +1,6 @@
 from django.conf.urls import include, url
-from django.contrib import admin
 from bucketlistapi import views
-from bucketlistapp import views as app_view
 from rest_framework.authtoken import views as rest_views
-from django.contrib.auth.views import logout
-import bucketlistapp.urls
-import bucketlistapi.urls
 
 urlpatterns = [
     url(r'^auth/', include('rest_framework.urls', namespace='rest_framework')),

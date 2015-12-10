@@ -3,9 +3,6 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 
 
-# Create your models here.
-
-
 class BaseModel(models.Model):
     created_date = models.DateTimeField(default=timezone.now)
     modified_date = models.DateTimeField(auto_now=True)

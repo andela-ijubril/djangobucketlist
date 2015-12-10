@@ -28,6 +28,13 @@ class IndexViewTest(TestCase):
         })
         self.assertEqual(response.status_code, 302)
 
+    def test_invalid_credentials_cant_login(self):
+        response = self.client.post('/login', {
+            'username': 'awesome',
+            'password': 'dude'
+        })
+        self.assertEqual(response.status_code, 302)
+
     def test_can_register(self):
         response = self.client.post('/register', {
             'username': 'golden',
@@ -36,5 +43,3 @@ class IndexViewTest(TestCase):
             'email': 'abiodun.shuaib@andela.com'
         })
         self.assertEqual(response.status_code, 302)
-
-    # def test_can
