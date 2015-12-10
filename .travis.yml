@@ -17,20 +17,14 @@ after_success:
 deploy:
   provider: heroku
   api_key:
-    secure: RSiy8NZe4g10wDtFm23rKZ/MWWKMyRIPMfQSj7Vr0X48hrF87vbPudSkYSEf1ZmxWt7FaEvXecw4iiCqx7ECrC3QCldreRfSgHf1Gs7fgn+XlUwZ4hSpyFcmRAFonjAVjHwQjh0UdlZovAbRyz4z1WmFfW+RwxJ21ZoCx8SAClekH/Av4W0jy/zLnRf2GapIoz0VVZITtp4qexYsVcdr+WLVJaoYXiTR1rz0FpiNnCKUWBSweqntwonmEkvFzHGwJgjZApsbmtg8omTZeP7cUDw/6PwWcF/51nlO2qHk5Q/hZqrVjz8vUbKDrzUjPvhPuIFR0SOzZkWIX1jSJkt4YjNUL6puBLvIXJk1vtzbYwJLWvFxswWfr4FmYGcjd6Y0zDSGM0ke7PS/ndjI83A/IyL7kaSixCpHvHgIwsTZAMYyTagHzEUsOxGz1x8RfKP6bcqgHIgiYaWJIfKvGqBbOA8MstGUgfsK9MEvm1qVSvjm0XU3jPrY6qKNUNtm5YZKKiYvlRTE8QXceN6rO7yNuZUbbtgFp7tS/+a/S/ZV4lRt01vq5ety1RQP1Y1shAk5mHzxHd6yl7eLM6cpMyiKstMVPKacZgyO2OpOjhmzSB67HBW62tiH9xM3nz/EvQVgUCjbuFR70Smx+LJrgfCbNSFijkVvTdK4QTcrnYNmTzo=
-  strategy: git
-  app: awesomebucket
+    secure: BSDbnvwNyHkrfIfjsC+BsQ5/6DrsyAZ+FGQ/Dlx9o8Po/an3Vr3HY8aCafaJWAzTs7YDaxxMWhLjdR4biGLBSNihblIMvqtbgQFNK0cpQkCOWnDJ3UCpBIf2zfWZdPO2Nn0w5k2HqT8ReYesQq4kAWv1qG1e9Ntbgu3oZSy6YnizXvVdTyLE1/p6oeLlCjhbCjNvuD9Gcrfr36dF4hGO3gx3R6cZCv2lUsIsJoBCAUdnO0sVhUrWAM4QVbiRO+rSj4NHumI0uGGIdYNyTgyMcTmDdgIk5I8MrgVUMYnsI9imBk02DSLUcmcOdiJxF4JK9bDwo8doa5bCJFMR3VSxwq93UAzqEN9jQgi/k3nNaz01HtprtqghpWYaw15t5cTi4d2wBkRAuYsOoEiazqKW2Yct5yZTXAXHE7Ooe3S1NGy2qilsWhD5nYWG24qjwt2N5HGP/g8v1nkygG/MV22PQ7GJ9F52xjN1eRLl5xVEpVHfbvpH5QpNIxQANanMwR+KhYqm2HHAhMsNbaZTVdSP47BdmIpI+t21ARdQlgVlsFVG4AbIGTsR3PkE943b6ghRhYG3WjstbrRjmhEbtqH+K6x7wjOOH5BTutS2ZOBTAi0ptPSxTUmNpXz+NqEmp8FZ6MN8Ai6cLkYl6vpjWJd6hx/PJI2mQhu4ZX2AiDWpf80=
+  app:
+    develop: awesomebucket
   skip_cleanup: true
-  on:
-    all_branches: true
   run:
-    - "export DJANGO_SETTINGS_MODULE=djangobucketlist.settings.production"
-    - "python manage.py collectstatic --noinput"
-    - "python manage.py makemigrations"
-    - "python manage.py migrate auth"
-    - "python manage.py migrate"
-    - "python manage.py syncdb --noinput"
-#before_deploy:
-#- git pull origin develop
-#after_deploy:
-#- heroku ps:scale web=1 --app awesomebucket
+  - export DJANGO_SETTINGS_MODULE=djangobucketlist.settings.production
+  - python manage.py collectstatic --noinput
+  - python manage.py makemigrations
+  - python manage.py migrate auth
+  - python manage.py migrate
+  - python manage.py syncdb --noinput
