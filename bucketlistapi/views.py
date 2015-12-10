@@ -1,5 +1,4 @@
 from django.http.response import Http404
-from django.shortcuts import render
 from django.contrib.auth.models import User
 from bucketlistapp.models import Bucketlist, BucketlistItem
 from bucketlistapi.serializers import BucketlistSerializer, BucketlistItemSerializer, UserSerializer
@@ -10,7 +9,6 @@ from rest_framework import status, permissions
 
 
 class BucketlistView(APIView):
-
     permission_classes = (permissions.IsAuthenticated,)
     serializer_class = BucketlistSerializer
     model = Bucketlist
@@ -61,7 +59,6 @@ class BucketListDetailView(APIView):
         Edit a single bucket of the authenticated user
         """
         bucketlist = self.get_bucket_object(pk)
-
         serializer = BucketlistSerializer(bucketlist, request.data)
 
         if serializer.is_valid():
@@ -74,7 +71,6 @@ class BucketListDetailView(APIView):
         Delete a single bucketlist of the user
         """
         bucketlist = self.get_bucket_object(pk)
-
         bucketlist.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
