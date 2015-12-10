@@ -51,6 +51,11 @@ class BucketListAPPTest(TestCase):
         response = self.client.post(url, data)
         self.assertEqual(response.status_code, 302)
 
+    def test_user_can_view_bucketlistitem(self):
+        url = reverse("bucketlist_item", kwargs={"bucketlist": self.bucketlist1.id})
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+
     def test_user_can_edit_an_item(self):
         url = reverse("update_bucketlist_item", kwargs={"bucketlist": self.bucketlist1.id, "item": self.item1.id})
         data = {"name": "The updated item"}
