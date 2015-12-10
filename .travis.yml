@@ -23,7 +23,6 @@ deploy:
   skip_cleanup: true
   run:
   - export DJANGO_SETTINGS_MODULE=djangobucketlist.settings.production
-  - python manage.py collectstatic --noinput
   - python manage.py makemigrations
   - python manage.py migrate auth
   - python manage.py migrate
