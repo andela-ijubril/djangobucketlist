@@ -22,12 +22,16 @@ deploy:
   app:
     develop: awesomebucket
   skip_cleanup: true
+  on:
+    repo: andela-ijubril/django-bucketlist-application
   run:
-  - export DJANGO_SETTINGS_MODULE=djangobucketlist.settings.production
-  - python manage.py collectstatic --noinput
-  - python manage.py makemigrations
-  - python manage.py migrate auth
-  - python manage.py migrate
-  - python manage.py syncdb --noinput
-after_deploy:
-- heroku ps:scale web=1 --app awesomebucket
+  - "export DJANGO_SETTINGS_MODULE=djangobucketlist.settings.production"
+  - "python manage.py collectstatic --noinput"
+  - "python manage.py makemigrations"
+  - "python manage.py migrate auth"
+  - "python manage.py migrate"
+  - "python manage.py syncdb --noinput"
+#before_deploy:
+#- git pull origin develop
+#after_deploy:
+#- heroku ps:scale web=1 --app awesomebucket
