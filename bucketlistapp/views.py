@@ -11,8 +11,6 @@ from django.utils.decorators import method_decorator
 from django.contrib.auth import authenticate, login
 from django.template import RequestContext
 
-# Create your views here.
-
 
 class IndexView(TemplateView):
     initial = {'key': 'value'}
