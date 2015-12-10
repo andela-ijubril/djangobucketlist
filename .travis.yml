@@ -22,7 +22,7 @@ deploy:
   app: awesomebucket
   skip_cleanup: true
   on:
-    repo: andela-ijubril/django-bucketlist-application
+    all_branches: true
   run:
     - "export DJANGO_SETTINGS_MODULE=djangobucketlist.settings.production"
     - "python manage.py collectstatic --noinput"
