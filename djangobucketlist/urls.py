@@ -6,6 +6,5 @@ import bucketlistapi.urls
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^', include(bucketlistapp.urls)),
-    url(r'^api/', include(bucketlistapi.urls)),
-    url(r'^docs/', include('rest_framework_swagger.urls')),
+    url(r'^api/v1/', include(bucketlistapi.urls)),
 ]

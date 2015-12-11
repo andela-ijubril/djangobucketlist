@@ -1,5 +1,7 @@
 from django.http.response import Http404
 from django.contrib.auth.models import User
+from rest_framework.authtoken.views import ObtainAuthToken
+
 from bucketlistapp.models import Bucketlist, BucketlistItem
 from bucketlistapi.serializers import BucketlistSerializer, BucketlistItemSerializer, UserSerializer
 from rest_framework import generics
@@ -27,6 +29,13 @@ class BucketlistView(APIView):
     def post(self, request, format=None):
         """
         Create a bucketlist for the current user
+        ---
+        parameters:
+            - name: name
+              description: name of bucketlist to be created
+              required: true
+              type: string
+              paramType: form
         """
 
         serializer = BucketlistSerializer(data=request.data)
@@ -57,6 +66,13 @@ class BucketListDetailView(APIView):
     def put(self, request, pk, format=None):
         """
         Edit a single bucket of the authenticated user
+         ---
+        parameters:
+            - name: name
+              description: name of bucketlist to be edited
+              required: true
+              type: string
+              paramType: form
         """
         bucketlist = self.get_bucket_object(pk)
         serializer = BucketlistSerializer(bucketlist, request.data)
@@ -98,6 +114,13 @@ class BucketlistItemView(APIView):
         """
         Create a single item for a bucketlist
         :param bucket_id:
+         ---
+        parameters:
+            - name: name
+              description: name of item to be created in the bucketlist
+              required: true
+              type: string
+              paramType: form
         """
 
         bucket = BucketListDetailView.get_bucket_object(bucket_id)
@@ -175,3 +198,22 @@ class UserList(generics.ListAPIView):
 class UserDetail(generics.RetrieveAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
+
+
+class TokenView(ObtainAuthToken):
+    """
+    Returns the user token
+    """
+
+    def post(self, request):
+        """
+        Returns the user token
+        ---
+        parameters:
+            - name: username
+            - name: password
+
+        """
+
+        response = super(TokenView, self).post(request)
+        return response

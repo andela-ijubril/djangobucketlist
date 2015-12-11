@@ -10,6 +10,6 @@ urlpatterns = [
     url(r'^bucketlists/(?P<pk>[0-9]+)/$', views.BucketListDetailView.as_view(), name='bucketlist_detail'),
     url(r'^bucketlists/(?P<bucket_id>[0-9]+)/items/$', views.BucketlistItemView.as_view(), name='bucketlist_item'),
     url(r'^bucketlists/(?P<bucket_id>[0-9]+)/items/(?P<item_id>[0-9]+)$', views.BucketlistItemDetailView.as_view(), name='item_detail'),
-    url(r'^api_token/$', rest_views.obtain_auth_token),
+    url(r'^api_token/$', views.TokenView.as_view()),
     url(r'^docs/', include('rest_framework_swagger.urls')),
 ]
