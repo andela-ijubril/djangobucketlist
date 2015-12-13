@@ -10,29 +10,27 @@
 
 {% block content %}
 
-
-
-
-<div class="container">
-    <div class="row">
-        <div class="col-sm-6 col-sm-offset-3">
+        <div class="col-sm-6">
             <div class="todolist not-done">
              <h1>{{ bucket.name }}</h1>
-
 
                 <form method="post" action="/bucketlists/{{ bucket.id }}/items/" class="form-inline">
 
 
                     {% csrf_token %}
-                    <div class="form-group">
+                    <div class="input--group">
+
                     {{ itemform.name }}
+
+                        <input type="submit" value="Add" class="btn btn-primary">
+
                         </div>
 
-{#                <input type="text" class="form-control add-todo" placeholder="Add a bucketlist">#}
-                <input type="submit" value="Add" class="btn btn-primary btn-lg">
                 </form>
                     <hr>
-
+                    {% if not items %}
+                        <div>No item currently in the {{ bucket.name }}</div>
+                    {% endif %}
                     <ul id="sortable" class="list-unstyled">
                         {% for item in items %}
                             <li class="ui-state-default">
@@ -55,7 +53,6 @@
 
         </div>
 
-    </div>
 
 <div id="edit-bucket" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-sm">
@@ -75,7 +72,7 @@
             </div>
         </div>
     </div>
-</div>
+{#</div>#}
 {% endblock content %}
 
 

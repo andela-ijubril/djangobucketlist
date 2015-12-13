@@ -12,3 +12,4 @@ PyYAML==3.11
 SQLAlchemy==1.0.9
 wheel==0.24.0
 whitenoise==2.0.6
+selenium-2.48.0

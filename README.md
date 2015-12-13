@@ -1,6 +1,6 @@
 # Django powered bucketlist application
 [![Coverage Status](https://coveralls.io/repos/andela-ijubril/djangobucketlist/badge.svg?branch=develop&service=github)](https://coveralls.io/github/andela-ijubril/djangobucketlist?branch=develop)
-[![Build Status](https://api.travis-ci.org/andela-ijubril/djangobucketlist.svg?branch=master)](https://api.travis-ci.org/andela-ijubril/djangobucketlist)
+[![Build Status](https://api.travis-ci.org/andela-ijubril/django-bucketlist-application.svg?branch=master)](https://api.travis-ci.org/andela-ijubril/djangobucketlist)
 
 ![My Bucketlist](http://3.bp.blogspot.com/-GWeanJf2zR4/UQexkAuMA-I/AAAAAAAAAwg/sKi4y94TCcE/s1600/Bucket-List-e1336246406457.png)
 
@@ -15,12 +15,12 @@ Awesome bucket is built with the following stack:
 
 * [Django](https://www.djangoproject.com/) - Django makes it easier to build better Web apps more quickly and with less code.
 * [Djangorestframework](http://www.django-rest-framework.org/) - Django REST framework is a powerful and flexible toolkit for building Web APIs.
-* [Twitter Bootstrap](http://getbootstrap.com/) - great UI boilerplate for modern web apps
+* [Twitter Bootstrap](http://getbootstrap.com/) - Great UI boilerplate for modern web apps
 * [jquery](https://jquery.com/) - The Write Less, Do More, JavaScript Library.
 * [django swagger](http://django-rest-swagger.readthedocs.org/en/latest/) - An API documentation generator for Swagger UI and Django REST Framework.
 
 ### API Documentation
-The Api documentation can be found [here](http://awesomebucket.herokuapp.com/api/docs)
+The API documentation can be found [here](http://awesomebucket.herokuapp.com/api/docs)
 ## Requirements
 To install and run this application, you need to have python installed on your machine.
 ### Installation
