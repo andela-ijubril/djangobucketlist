@@ -36,6 +36,7 @@ class BucketListAPITest(APITestCase):
         data = {"name": "bla bla bla"}
         response = self.client.post(url, data)
         self.assertEqual(response.status_code, 201)
+        self.assertDictContainsSubset({'name': 'bla bla bla'}, response.data)
 
     def test_user_can_view_bucketlist(self):
         """
@@ -46,23 +47,24 @@ class BucketListAPITest(APITestCase):
         self.assertEqual(response.status_code, 200)
 
     def test_can_view_a_bucketlist(self):
-        url = reverse("bucketlist_detail", kwargs={"pk": self.bucketlist1.id})
+        url = reverse("bucketlist_detail", kwargs={"bucket_id": self.bucketlist1.id})
         response = self.client.get(url, )
         self.assertEqual(response.status_code, 200)
 
     def test_invalid_bucket(self):
-        url = reverse("bucketlist_detail", kwargs={"pk": 5})
+        url = reverse("bucketlist_detail", kwargs={"bucket_id": 5})
         response = self.client.get(url, )
         self.assertEqual(response.status_code, 404)
 
     def test_user_can_edit_a_bucketlist(self):
-        url = reverse("bucketlist_detail", kwargs={"pk": self.bucketlist1.id})
+        url = reverse("bucketlist_detail", kwargs={"bucket_id": self.bucketlist1.id})
         data = {"name": "The updated bucketlist"}
         response = self.client.put(url, data)
         self.assertEqual(response.status_code, 200)
+        self.assertDictContainsSubset({'name': 'The updated bucketlist'}, response.data)
 
     def test_user_can_delete_a_bucketlist(self):
-        url = reverse("bucketlist_detail", kwargs={"pk": self.bucketlist1.id})
+        url = reverse("bucketlist_detail", kwargs={"bucket_id": self.bucketlist1.id})
         response = self.client.delete(url)
         self.assertEqual(response.status_code, 204)
 
@@ -71,6 +73,7 @@ class BucketListAPITest(APITestCase):
         data = {"name": "get a passport"}
         response = self.client.post(url, data)
         self.assertEqual(response.status_code, 201)
+        self.assertDictContainsSubset({'name': 'get a passport'}, response.data)
 
     def test_user_can_view_all_item_in_a_bucketlist(self):
         url = reverse("bucketlist_item", kwargs={"bucket_id": self.bucketlist1.id})
@@ -82,6 +85,7 @@ class BucketListAPITest(APITestCase):
         data = {"name": "The updated item"}
         response = self.client.put(url, data)
         self.assertEqual(response.status_code, 200)
+        self.assertDictContainsSubset({'name': 'The updated item'}, response.data)
 
     def test_user_can_delete_an_item(self):
         url = reverse("item_detail", kwargs={"bucket_id": self.bucketlist1.id, "item_id": self.item1.id})

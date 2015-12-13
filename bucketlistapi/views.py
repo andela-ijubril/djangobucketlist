@@ -1,13 +1,15 @@
 from django.http.response import Http404
 from django.contrib.auth.models import User
-from rest_framework.authtoken.views import ObtainAuthToken
 
-from bucketlistapp.models import Bucketlist, BucketlistItem
-from bucketlistapi.serializers import BucketlistSerializer, BucketlistItemSerializer, UserSerializer
 from rest_framework import generics
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status, permissions
+from rest_framework.authtoken.views import ObtainAuthToken
+
+from bucketlistapp.models import Bucketlist, BucketlistItem
+from bucketlistapi.serializers import BucketlistSerializer, BucketlistItemSerializer, UserSerializer
+
 
 
 class BucketlistView(APIView):
@@ -48,22 +50,22 @@ class BucketlistView(APIView):
 class BucketListDetailView(APIView):
 
     @staticmethod
-    def get_bucket_object(pk):
+    def get_bucket_object(bucket_id):
         try:
-            return Bucketlist.objects.get(pk=pk)
+            return Bucketlist.objects.get(id=bucket_id)
         except Bucketlist.DoesNotExist:
             raise Http404
 
-    def get(self, request, pk, format=None):
+    def get(self, request, bucket_id, format=None):
         """
         get a single bucketlist of the authenticated user
         """
-        bucketlist = self.get_bucket_object(pk)
+        bucketlist = self.get_bucket_object(bucket_id)
         serializer = BucketlistSerializer(bucketlist)
 
         return Response(serializer.data)
 
-    def put(self, request, pk, format=None):
+    def put(self, request, bucket_id, format=None):
         """
         Edit a single bucket of the authenticated user
          ---
@@ -74,7 +76,7 @@ class BucketListDetailView(APIView):
               type: string
               paramType: form
         """
-        bucketlist = self.get_bucket_object(pk)
+        bucketlist = self.get_bucket_object(bucket_id)
         serializer = BucketlistSerializer(bucketlist, request.data)
 
         if serializer.is_valid():
@@ -82,11 +84,11 @@ class BucketListDetailView(APIView):
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def delete(self, request, pk, format=None):
+    def delete(self, request, bucket_id, format=None):
         """
         Delete a single bucketlist of the user
         """
-        bucketlist = self.get_bucket_object(pk)
+        bucketlist = self.get_bucket_object(bucket_id)
         bucketlist.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 

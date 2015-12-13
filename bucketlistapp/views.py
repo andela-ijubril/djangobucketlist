@@ -13,6 +13,7 @@ from django.template import RequestContext
 
 
 class IndexView(TemplateView):
+
     initial = {'key': 'value'}
     template_name = 'bucketlistapp/index.html'
 
@@ -24,6 +25,9 @@ class IndexView(TemplateView):
 
 
 class LoginView(IndexView):
+    """
+    The Login view that handles User login
+    """
     form_class = LoginForm
 
     def post(self, request, *args, **kwargs):
@@ -56,6 +60,9 @@ class LoginView(IndexView):
 
 
 class RegisterView(IndexView):
+    """
+    The View that handles the user registration on the app
+    """
     form_class = RegisterForm
 
     def post(self, request, **kwargs):
@@ -78,6 +85,9 @@ class RegisterView(IndexView):
 
 
 class LoginRequiredMixin(object):
+    """
+    Enforce login on some views
+    """
 
     @method_decorator(login_required(login_url='/'))
     def dispatch(self, request, *args, **kwargs):
@@ -86,6 +96,9 @@ class LoginRequiredMixin(object):
 
 
 class BucketlistAppView(LoginRequiredMixin, TemplateView):
+    """
+    The view that handles the bucketlist creation and viewing existing bucketlist of the users
+    """
     form_class = BucketlistForm
     template_name = 'bucketlistapp/bucket.html'
 
@@ -105,6 +118,9 @@ class BucketlistAppView(LoginRequiredMixin, TemplateView):
 
 
 class BucketlistItemAppView(LoginRequiredMixin, TemplateView):
+    """
+    The View that handles the creation and viewing of bucketlist items
+    """
     form_class = ItemForm
     template_name = 'bucketlistapp/item.html'
 
@@ -126,8 +142,10 @@ class BucketlistItemAppView(LoginRequiredMixin, TemplateView):
         return redirect('/bucketlists/' + kwargs['bucketlist'] + '/items/', context_instance=RequestContext(request))
 
 
-
 class UpdateBucketlistView(LoginRequiredMixin, TemplateView):
+    """
+    The View that handles the deletion and updating a single bucketlist
+    """
 
     def get(self, request, **kwargs):
         bucketlist = Bucketlist.objects.get(id=kwargs['bucket_id'])
@@ -144,6 +162,9 @@ class UpdateBucketlistView(LoginRequiredMixin, TemplateView):
 
 
 class UpdateBucketlistItemView(LoginRequiredMixin, TemplateView):
+    """
+    The view that handles the deletion and updating a single bucketlistitem
+    """
 
     def get(self, request, **kwargs):
         item = BucketlistItem.objects.get(id=kwargs['item'])
@@ -161,6 +182,9 @@ class UpdateBucketlistItemView(LoginRequiredMixin, TemplateView):
 
 
 class ItemStatusView(LoginRequiredMixin, TemplateView):
+    """
+    The view that handles checking an item status as  done
+    """
 
     def get(self, request, **kwargs):
 
