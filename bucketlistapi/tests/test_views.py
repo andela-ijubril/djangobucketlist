@@ -32,7 +32,7 @@ class BucketListAPITest(APITestCase):
         """
         Test user can create a bucketlist
         """
-        url = reverse("bucket_list")
+        url = reverse("bucketlist")
         data = {"name": "bla bla bla"}
         response = self.client.post(url, data)
         self.assertEqual(response.status_code, 201)
@@ -42,7 +42,7 @@ class BucketListAPITest(APITestCase):
         """
         Test user can view his bucketlist
         """
-        url = reverse("bucket_list")
+        url = reverse("bucketlist")
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
 

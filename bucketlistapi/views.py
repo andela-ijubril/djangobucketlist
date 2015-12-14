@@ -108,8 +108,7 @@ class BucketlistItemView(APIView):
         :param bucket_id:
         """
         items = BucketlistItem.objects.filter(bucketlist=BucketListDetailView.get_bucket_object(bucket_id)).all()
-
-        serializer = BucketlistSerializer(items, many=True)
+        serializer = BucketlistItemSerializer(items, many=True)
         return Response(serializer.data)
 
     def post(self, request, bucket_id, format=None):

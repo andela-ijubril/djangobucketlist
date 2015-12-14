@@ -68,12 +68,12 @@ class BucketListAPPTest(TestCase):
         self.assertEqual(response.status_code, 302)
 
     def test_user_can_mark_item_done(self):
-        url = reverse("bucket_list_item_status", kwargs={"bucketlist": self.bucketlist1.id, "item": self.item1.id})
+        url = reverse("bucketlist_item_status", kwargs={"bucketlist": self.bucketlist1.id, "item": self.item1.id})
         response = self.client.get(url)
         self.assertEqual(response.status_code, 302)
 
     def test_can_unmark_an_item(self):
-        url = reverse("bucket_list_item_status", kwargs={"bucketlist": self.bucketlist2.id, "item": self.item2.id})
+        url = reverse("bucketlist_item_status", kwargs={"bucketlist": self.bucketlist2.id, "item": self.item2.id})
         response = self.client.get(url)
         self.assertEqual(response.status_code, 302)
 

@@ -5,18 +5,19 @@ from django.contrib.auth.models import User
 
 
 class BucketlistItemSerializer(serializers.ModelSerializer):
-
+    bucketlist = serializers.ReadOnlyField(source='bucketlist.name')
     class Meta:
         model = BucketlistItem
-        fields = ('id', 'name', 'done', 'created_date')
+        fields = ('id', 'name', 'done', 'created_date', 'bucketlist')
 
 
 class BucketlistSerializer(serializers.ModelSerializer):
     created_by = serializers.ReadOnlyField(source='created_by.username')
+    items = serializers.PrimaryKeyRelatedField(many=True, queryset=BucketlistItem.objects.all())
 
     class Meta:
         model = Bucketlist
-        fields = ('id', 'name', 'created_date', 'created_by')
+        fields = ('id', 'name', 'created_date', 'created_by', 'items')
 
 
 class UserSerializer(serializers.ModelSerializer):
