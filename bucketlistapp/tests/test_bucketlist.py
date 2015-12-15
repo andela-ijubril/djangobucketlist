@@ -35,13 +35,13 @@ class BucketListAPPTest(TestCase):
         self.assertEqual(response.status_code, 200)
 
     def test_user_can_edit_a_bucketlist(self):
-        url = reverse("update_bucket_list", kwargs={"bucket_id": self.bucketlist1.id})
+        url = reverse("update_bucket_list", kwargs={"bucketlist": self.bucketlist1.id})
         data = {"name": "The updated bucketlist"}
         response = self.client.post(url, data)
         self.assertEqual(response.status_code, 302)
 
     def test_user_can_delete_a_bucketlist(self):
-        url = reverse("update_bucket_list", kwargs={"bucket_id": self.bucketlist1.id})
+        url = reverse("update_bucket_list", kwargs={"bucketlist": self.bucketlist1.id})
         response = self.client.get(url)
         self.assertEqual(response.status_code, 302)
 
