@@ -1,10 +1,12 @@
-from bucketlistapp.models import Bucketlist, BucketlistItem
-
-from rest_framework import serializers
 from django.contrib.auth.models import User
+from rest_framework import serializers
+from bucketlistapp.models import Bucketlist, BucketlistItem
 
 
 class BucketlistItemSerializer(serializers.ModelSerializer):
+    """
+    Bucketlist item serializer
+    """
     bucketlist = serializers.ReadOnlyField(source='bucketlist.name')
     class Meta:
         model = BucketlistItem
@@ -12,6 +14,9 @@ class BucketlistItemSerializer(serializers.ModelSerializer):
 
 
 class BucketlistSerializer(serializers.ModelSerializer):
+    """
+    Bucketlist serializer
+    """
     created_by = serializers.ReadOnlyField(source='created_by.username')
     items = serializers.PrimaryKeyRelatedField(many=True, queryset=BucketlistItem.objects.all())
 

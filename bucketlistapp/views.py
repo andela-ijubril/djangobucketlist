@@ -148,12 +148,12 @@ class UpdateBucketlistView(LoginRequiredMixin, TemplateView):
     """
 
     def get(self, request, **kwargs):
-        bucketlist = Bucketlist.objects.get(id=kwargs['bucket_id'])
+        bucketlist = Bucketlist.objects.get(id=kwargs['bucketlist'])
         bucketlist.delete()
         return redirect('/bucketlists/', context_instance=RequestContext(request))
 
     def post(self, request, **kwargs):
-        bucket_list = Bucketlist.objects.get(id=kwargs['bucket_id'])
+        bucket_list = Bucketlist.objects.get(id=kwargs['bucketlist'])
         name = request.POST.get('name')
         bucket_list.name = name
         bucket_list.save()
