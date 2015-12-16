@@ -23,6 +23,6 @@ class BucketModelsTest(TestCase):
         self.assertIsInstance(self.bucketlist, Bucketlist)
         self.assertTrue(Bucketlist.objects.all())
 
-    def test_itemm_was_created_successfully(self):
+    def test_item_was_created_successfully(self):
         self.assertIsInstance(self.item, BucketlistItem)
         self.assertTrue(BucketlistItem.objects.all())
