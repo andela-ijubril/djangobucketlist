@@ -2,15 +2,11 @@
 {% load staticfiles %}
 {% load bootstrap %}
 
-
 {% block sidebar %}
-
    {% include "bucketlistapp/partials/sidebar.html" %}
 {% endblock sidebar %}
 
-
 {% block content %}
-
 
         <div class="col-md-12 col-sm-6">
             <div class="panel panel-default">
@@ -85,7 +81,6 @@
                     <form method="post" action="">
                     {% csrf_token %}
                     {{ bucketlistform|bootstrap }}
-{#                <input type="text" class="form-control add-todo" placeholder="Add a bucketlist">#}
                 <input type="submit" value="Edit">
                 </form>
                 </div>
@@ -95,7 +90,5 @@
 
     <!-- JavaScrip Search Plugin -->
     <script src="//rawgithub.com/stidges/jquery-searchable/master/dist/jquery.searchable-1.0.0.min.js"></script>
-
-{#</div>#}
-
+    
 {% endblock content %}

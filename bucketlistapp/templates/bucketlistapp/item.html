@@ -5,28 +5,31 @@
 
 {% block sidebar %}
 
-   {% include "bucketlistapp/partials/sidebar.html" %}
+    {% include "bucketlistapp/partials/sidebar.html" %}
 {% endblock sidebar %}
 
 {% block content %}
 
-        <div class="col-md-10 col-sm-6">
-            <div class="todolist not-done">
-             <h1>{{ bucket.name }}</h1>
+    <div class="col-md-12 col-sm-6">
+        <div class="panel panel-default">
+            <div class="panel-heading c-list">
+                <span class="title">{{ bucket.name }}</span>
 
-                <form method="post" action="/bucketlists/{{ bucket.id }}/items/" class="form-inline">
+                <div class="todolist not-done">
+
+                    <form method="post" action="/bucketlists/{{ bucket.id }}/items/" class="form-inline">
 
 
-                    {% csrf_token %}
-                    <div class="input--group">
+                        {% csrf_token %}
+                        <div class="input--group">
 
-                    {{ itemform.name }}
+                            {{ itemform.name }}
 
-                        <input type="submit" value="Add" class="btn btn-primary">
+                            <input type="submit" value="Add" class="btn btn-primary">
 
                         </div>
 
-                </form>
+                    </form>
                     <hr>
                     {% if not items %}
                         <div>No item currently in the {{ bucket.name }}</div>
@@ -34,27 +37,38 @@
                     <ul id="sortable" class="list-unstyled">
                         {% for item in items %}
                             <li class="ui-state-default">
-                        <div class="checkbox">
-                            <label><a href="/bucketlists/{{ bucket.id }}/items/{{ item.id }}/status/"><input type="checkbox" value="" {% if item.done %} checked {% endif %}  onclick='window.location.assign("/bucketlists/{{ bucket.id }}/items/{{ item.id }}/status/")'/>{{ item.name }}</a></label>
-                            <a href="/bucketlists/{{ bucket.id }}/items/{{ item.id }}/" class="delete-item"><span class="glyphicon glyphicon-trash text-muted c-info" data-toggle="tooltip" title="Delete"></span></a>
-                            <a data-action="/bucketlists/{{ bucket.id }}/items/{{ item.id }}/" href="#edit-bucket" data-toggle="modal" data-placement="top" class="edit-link"><span class="glyphicon glyphicon-pencil text-muted c-info" data-toggle="tooltip" title="Edit"></span></a>
-                        </div>
-                    </li>
+                                <div class="checkbox">
+                                    <label><a href="/bucketlists/{{ bucket.id }}/items/{{ item.id }}/status/"><input
+                                            type="checkbox" value="" {% if item.done %} checked {% endif %}
+                                            onclick='window.location.assign("/bucketlists/{{ bucket.id }}/items/{{ item.id }}/status/")'/>{{ item.name }}
+                                    </a></label>
+                                    <a href="/bucketlists/{{ bucket.id }}/items/{{ item.id }}/"
+                                       class="delete-item"><span class="glyphicon glyphicon-trash text-muted c-info"
+                                                                 data-toggle="tooltip" title="Delete"></span></a>
+                                    <a data-action="/bucketlists/{{ bucket.id }}/items/{{ item.id }}/"
+                                       href="#edit-bucket" data-toggle="modal" data-placement="top"
+                                       class="edit-link"><span class="glyphicon glyphicon-pencil text-muted c-info"
+                                                               data-toggle="tooltip" title="Edit"></span></a>
+                                </div>
+                            </li>
 
                         {% endfor %}
 
-                </ul>
-                                    <hr>
-<div class="row" style="margin:20px;">
+                    </ul>
+                    <hr>
+                    <div class="row" style="margin:20px;">
 
-                                   </div>
+                    </div>
 
- </div>
+                </div>
 
+            </div>
         </div>
+    </div>
 
 
-<div id="edit-bucket" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div id="edit-bucket" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog"
+         aria-labelledby="mySmallModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
                 <div class="modal-header">
@@ -63,18 +77,16 @@
                 </div>
                 <div class="modal-body">
                     <form method="post" action="">
-                    {% csrf_token %}
-                    {{ itemform|bootstrap }}
-{#                <input type="text" class="form-control add-todo" placeholder="Add a bucketlist">#}
-                <input type="submit" value="Edit">
-                </form>
+                        {% csrf_token %}
+                        {{ itemform|bootstrap }}
+                        <input type="submit" value="Edit">
+                    </form>
                 </div>
             </div>
         </div>
     </div>
-{#</div>#}
+    {#</div>#}
 {% endblock content %}
-
 
 <script src="{% static 'js/jquery.min.js' %}"></script>
 <script src="{% static 'js/jquery-ui.min.js' %}"></script>
@@ -82,38 +94,36 @@
 {#<script src="{% static 'js/script.js' %}"></script>#}
 
 <script>
-     $(document).ready(function () {
-     console.log("i got here")
-    $('.forgot-pass').click(function(event) {
-      $(".pr-wrap").toggleClass("show-pass-reset");
-    });
+    $(document).ready(function () {
+        $('.forgot-pass').click(function (event) {
+            $(".pr-wrap").toggleClass("show-pass-reset");
+        });
 
-    $('.pass-reset-submit').click(function(event) {
-      $(".pr-wrap").removeClass("show-pass-reset");
-    });
+        $('.pass-reset-submit').click(function (event) {
+            $(".pr-wrap").removeClass("show-pass-reset");
+        });
 
-     $(".edit-link").click(function(e){
-         e.preventDefault();
-         var url = $(this).data("action");
-         console.log(url);
-         $("#edit-bucket").find("form").attr("action",url);
-     });
+        $(".edit-link").click(function (e) {
+            e.preventDefault();
+            var url = $(this).data("action");
+            console.log(url);
+            $("#edit-bucket").find("form").attr("action", url);
+        });
 
-     $('.delete-item').click(function(e) {
-        e.preventDefault();
-        if (!confirm("Abeg Are you sure you want to delete this file?")) return;
-        var url = $(this).attr('href');
-        $.ajax({
-            url: url,
-            type:"POST",
-            success: "",
-            error: ""
+        $('.delete-item').click(function (e) {
+            e.preventDefault();
+            if (!confirm("Are you sure you want to delete this file?")) return;
+            var url = $(this).attr('href');
+            $.ajax({
+                url: url,
+                type: "POST",
+                success: "",
+                error: ""
+            })
+
         })
 
-
-    })
-
-});
+    });
 </script>
 
 </body>
