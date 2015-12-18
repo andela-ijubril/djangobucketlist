@@ -10,9 +10,12 @@
 
 {% block content %}
 
-        <div class="col-md-10 col-sm-6">
+        <div class="col-md-12 col-sm-6">
+            <div class="panel panel-default">
+                <div class="panel-heading c-list">
+                    <span class="title">{{ bucket.name }}</span>
+
             <div class="todolist not-done">
-             <h1>{{ bucket.name }}</h1>
 
                 <form method="post" action="/bucketlists/{{ bucket.id }}/items/" class="form-inline">
 
@@ -52,6 +55,8 @@
  </div>
 
         </div>
+    </div>
+            </div>
 
 
 <div id="edit-bucket" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
@@ -65,7 +70,6 @@
                     <form method="post" action="">
                     {% csrf_token %}
                     {{ itemform|bootstrap }}
-{#                <input type="text" class="form-control add-todo" placeholder="Add a bucketlist">#}
                 <input type="submit" value="Edit">
                 </form>
                 </div>

@@ -77,7 +77,7 @@ class ItemForm(forms.ModelForm):
         model = BucketlistItem
         fields = ['name']
         widgets = {'name': forms.TextInput(attrs={
-            'placeholder': 'Enter Items name',
+            'placeholder': 'Enter Item name',
             'autocomplete': 'off',
             'class': 'form-control input-lg'
         })}
