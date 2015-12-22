@@ -20,6 +20,15 @@
     <div id="loginbox" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
         <div class="panel panel-info">
             <div class="panel-heading">
+
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-danger" role="alert" id="flash-message">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+
                 <div class="panel-title">Sign In</div>
 
             </div>
@@ -56,6 +65,7 @@
                                     Sign Up Here
                                 </a>
                             </div>
+
                         </div>
                     </div>
                 </form>

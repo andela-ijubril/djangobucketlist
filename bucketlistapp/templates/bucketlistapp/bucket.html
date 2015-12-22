@@ -63,7 +63,7 @@
                     <form method="post" action="/bucketlists/">
                     {% csrf_token %}
                     {{ bucketlistform|bootstrap }}
-                <input type="submit" value="Add">
+                <input type="submit" value="Add" class="btn btn-primary">
                 </form>
                 </div>
             </div>
@@ -81,7 +81,7 @@
                     <form method="post" action="">
                     {% csrf_token %}
                     {{ bucketlistform|bootstrap }}
-                <input type="submit" value="Edit">
+                <input type="submit" value="Edit" class="btn btn-primary">
                 </form>
                 </div>
             </div>
@@ -90,5 +90,5 @@
 
     <!-- JavaScrip Search Plugin -->
     <script src="//rawgithub.com/stidges/jquery-searchable/master/dist/jquery.searchable-1.0.0.min.js"></script>
-    
+
 {% endblock content %}

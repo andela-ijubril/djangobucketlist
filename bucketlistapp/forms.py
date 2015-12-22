@@ -69,6 +69,9 @@ class BucketlistForm(forms.ModelForm):
         model = Bucketlist
         fields = ['name']
         labels = {'name': 'Bucketlist name'}
+        widgets = {'name': forms.TextInput(attrs={
+            'required': 'required'
+        })}
 
 
 class ItemForm(forms.ModelForm):
@@ -79,5 +82,6 @@ class ItemForm(forms.ModelForm):
         widgets = {'name': forms.TextInput(attrs={
             'placeholder': 'Enter Item name',
             'autocomplete': 'off',
-            'class': 'form-control input-lg'
+            'class': 'form-control',
+            'required': 'required'
         })}
