@@ -17,11 +17,11 @@
 
                 <div class="todolist not-done">
 
-                    <form method="post" action="/bucketlists/{{ bucket.id }}/items/" class="form-inline">
+                    <form method="post" action="/bucketlists/{{ bucket.id }}/items/">
 
 
                         {% csrf_token %}
-                        <div class="input--group">
+                        <div class="item-input">
 
                             {{ itemform.name }}
 

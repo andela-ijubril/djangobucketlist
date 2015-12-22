@@ -103,9 +103,7 @@ function removeItem(element){
 
 $(function () {
     /* BOOTSNIPP FULLSCREEN FIX */
-    if (window.location == window.parent.location) {
-        $('#back-to-bootsnipp').removeClass('hide');
-    }
+
 
 
     $('[data-toggle="tooltip"]').tooltip();
@@ -162,7 +160,14 @@ var agree=confirm("Are you sure you want to delete this file?");
 }
 
  $(document).ready(function () {
-     console.log("i got here")
+
+     $("#flash-message").alert();
+     console.log("i got here");
+     $("#flash-message").fadeTo(2000, 500).slideUp(500, function(){
+               $("#flash-message").alert('close');
+                });
+
+
     $('.forgot-pass').click(function(event) {
       $(".pr-wrap").toggleClass("show-pass-reset");
     });
@@ -172,22 +177,12 @@ var agree=confirm("Are you sure you want to delete this file?");
     });
 
      $(".edit-link").click(function(e){
-         console.log("modal opend")
          e.preventDefault();
          var url = $(this).data("action");
          console.log(url);
          $("#edit-bucket").find("form").attr("action",url);
      });
 
-     //$(".edit-bucket").click(function(e){
-     //    e.preventDefault();
-     //    console.log("check")
-     //    var bucketName = $(this).closest("div").find(".name").text();
-     //    console.log(bucketName);
-     //    $("#edit-bucket").find("h4").text("Edit " + bucketName);
-     //    $("#edit-bucket").find("#id_name").attr("value", bucketName);
-     //
-     //})
 
  });
 

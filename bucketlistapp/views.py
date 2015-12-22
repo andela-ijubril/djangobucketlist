@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.http.response import Http404
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
@@ -48,7 +49,8 @@ class LoginView(IndexView):
                         context_instance=RequestContext(request)
                     )
             else:
-
+                messages.add_message(
+                    request, messages.ERROR, 'Incorrect username or password!')
                 return redirect(
                     '/',
                     context_instance=RequestContext(request)
@@ -110,6 +112,10 @@ class BucketlistAppView(LoginRequiredMixin, TemplateView):
 
     def post(self, request, **kwargs):
         name = request.POST.get('name')
+        if not name:
+            messages.add_message(
+                    request, messages.ERROR, 'Enter a valid name')
+            return redirect('/bucketlists/', context_instance=RequestContext(request))
 
         bucketlist = Bucketlist(name=name, created_by=request.user)
         bucketlist.save()
@@ -135,6 +141,11 @@ class BucketlistItemAppView(LoginRequiredMixin, TemplateView):
 
     def post(self, request, **kwargs):
         name = request.POST.get('name')
+
+        if not name:
+            messages.add_message(
+                    request, messages.ERROR, 'Enter a valid name')
+            return redirect('/bucketlists/' + kwargs['bucketlist'] + '/items/', context_instance=RequestContext(request))
 
         item = BucketlistItem(name=name, bucketlist=Bucketlist.objects.get(id=kwargs['bucketlist']))
         item.save()

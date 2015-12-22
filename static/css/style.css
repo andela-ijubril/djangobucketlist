@@ -360,8 +360,13 @@ a:visited{
 
 /* sidebar styling */
 .sidebar {
-	position: fixed;
     left: 30px;
     height: 400px;
-    width: 262px;
+}
+.item-input{
+    display: flex;
+}
+
+#id_name{
+    margin-right: 10px;
 }
