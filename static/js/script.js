@@ -87,20 +87,6 @@ function removeItem(element){
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 $(function () {
     /* BOOTSNIPP FULLSCREEN FIX */
 
@@ -140,16 +126,6 @@ $(function () {
         }
     })
 });
-
-
-
-
-
-
-
-
-
-
 
 
 // home page landing
